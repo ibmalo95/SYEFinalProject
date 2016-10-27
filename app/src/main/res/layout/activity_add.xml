@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add"
     android:layout_width="match_parent"
@@ -8,15 +8,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.setup.finalproject.Add">
+    android:orientation="vertical"
+    tools:context="com.example.setup.finalproject.AddActivity">
 
     <EditText
         android:id="@+id/college_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/college_name"
-        android:layout_marginLeft="@dimen/college_name_margin"
-        android:textSize="50sp"/>
+        android:textSize="60sp"
+        android:layout_marginLeft="@dimen/college_name_margin"/>
 
     <Button
         android:id="@+id/add_college"
@@ -27,4 +28,4 @@
         android:layout_marginLeft="@dimen/button_margin"
         android:layout_below="@+id/college_name"/>
 
-</RelativeLayout>
+</LinearLayout>

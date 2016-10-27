@@ -8,6 +8,8 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 
+    public static final int ADD_REQUEST = 1;
+
     Button add = null;
 
     @Override
@@ -19,8 +21,8 @@ public class MainActivity extends Activity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Add.class);
-                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                startActivityForResult(intent, ADD_REQUEST);
             }
         });
 
