@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
     public static final String LOG_TAG = MainActivity.class.getName();
 
     Button add = null;
+    Button map = null;
     String college = null;
 
     @Override
@@ -28,6 +29,9 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent, ADD_REQUEST);
             }
         });
+
+        // TODO: Add activity for the map view
+        map  = (Button) findViewById(R.id.map);
     }
 
     // Result from NoteActivity gets processed here
