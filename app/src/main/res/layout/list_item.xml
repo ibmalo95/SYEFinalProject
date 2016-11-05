@@ -5,10 +5,20 @@
 
     <!--TODO add the delete icon-->
 
+    <ImageButton
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:background="#fff"/>
+
     <TextView
         android:id="@+id/list_item"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="3"
         android:layout_height="wrap_content"
         android:textSize="@dimen/item_size"/>
+
+
 
 </LinearLayout>

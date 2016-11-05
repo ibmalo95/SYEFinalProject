@@ -20,15 +20,11 @@ public class MainActivity extends Activity {
     Button map = null;
     String college = null;
     private MainFragment mainFragment;
-    ArrayAdapter<String> collegesAdapter;
-    ArrayList<String> colleges = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        collegesAdapter = new ArrayAdapter(this, R.layout.fragment_main, R.id.list_item, colleges);
 
         mainFragment = (MainFragment) getFragmentManager().findFragmentById(R.id.main_fragment);
 

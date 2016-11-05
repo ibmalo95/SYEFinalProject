@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,11 +21,17 @@ public class MainFragment extends Fragment {
 
     ListView list = null;
 
+    ArrayAdapter<String> collegesAdapter;
+    List<String> colleges;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        colleges = new ArrayList();
+        collegesAdapter = new ArrayAdapter(getContext(), R.layout.list_item, R.id.list_item, colleges);
+
     }
 
     @Override
@@ -33,12 +40,13 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         list = (ListView) root.findViewById(R.id.college_list);
+        list.setAdapter(collegesAdapter);
         return root;
     }
 
     // add college to the ListView
     protected void addCollege(String college) {
-
+        colleges.add(college);
     }
 
 }
