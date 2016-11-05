@@ -6,6 +6,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -14,17 +18,27 @@ import android.view.ViewGroup;
  */
 public class MainFragment extends Fragment {
 
+    ListView list = null;
 
-    public MainFragment() {
-        // Required empty public constructor
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        list = (ListView) root.findViewById(R.id.college_list);
+        return root;
+    }
+
+    // add college to the ListView
+    protected void addCollege(String college) {
+
     }
 
 }

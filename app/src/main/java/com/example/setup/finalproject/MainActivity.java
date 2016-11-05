@@ -1,11 +1,15 @@
 package com.example.setup.finalproject;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class MainActivity extends Activity {
 
@@ -15,11 +19,18 @@ public class MainActivity extends Activity {
     Button add = null;
     Button map = null;
     String college = null;
+    private MainFragment mainFragment;
+    ArrayAdapter<String> collegesAdapter;
+    ArrayList<String> colleges = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        collegesAdapter = new ArrayAdapter(this, R.layout.fragment_main, R.id.list_item, colleges);
+
+        mainFragment = (MainFragment) getFragmentManager().findFragmentById(R.id.main_fragment);
 
         add = (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
@@ -34,17 +45,13 @@ public class MainActivity extends Activity {
         map  = (Button) findViewById(R.id.map);
     }
 
-    // Result from NoteActivity gets processed here
+    // Result from AddActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
         if (requestCode == ADD_REQUEST && resultCode == RESULT_OK) {
             college = result.getStringExtra(AddActivity.ADD);
+            mainFragment.addCollege(college);
             Log.i(LOG_TAG, college);
         }
     }
 
-    // TODO: add college to the ListView
-    // Need a reference to the fragment
-    protected void addCollege() {
-
-    }
 }

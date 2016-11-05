@@ -10,11 +10,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.setup.finalproject.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Selected Colleges"
-        android:layout_above="@+id/main_fragment"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Selected Colleges"-->
+        <!--android:layout_above="@+id/main_fragment"/>-->
 
     <fragment
         android:id="@+id/main_fragment"
