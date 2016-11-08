@@ -14,7 +14,6 @@ import java.util.List;
 
 
 /**
- * TODO implement the ListView
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
@@ -45,6 +44,7 @@ public class MainFragment extends Fragment {
     }
 
     // add college to the ListView
+    // TODO get data from USED and put url and location in HashMap
     protected void addCollege(String college) {
         colleges.add(college);
     }
