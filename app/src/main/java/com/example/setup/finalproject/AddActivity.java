@@ -13,6 +13,8 @@ public class AddActivity extends Activity {
     EditText college_name = null;
     Button add_college = null;
 
+    // TODO be able to cancel and get back to the listview
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

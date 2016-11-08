@@ -1,6 +1,7 @@
 package com.example.setup.finalproject;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,9 @@ import java.util.List;
  */
 public class MainFragment extends Fragment {
 
+    //https://inventory.data.gov/api/action/datastore_search?resource_id=38625c3d-5388-4c16-a30f-d105432553a4&fields=INSTNM,WEBADDR&q={%22INSTNM%22:%22clarkson%22}
+
+    public static final String APIKEY = "38625c3d-5388-4c16-a30f-d105432553a4";
     ListView list = null;
 
     ArrayAdapter<String> collegesAdapter;
@@ -44,9 +48,13 @@ public class MainFragment extends Fragment {
     }
 
     // add college to the ListView
-    // TODO get data from USED and put url and location in HashMap
+    // TODO get data from USED and put url and location in a HashMap
     protected void addCollege(String college) {
         colleges.add(college);
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https").authority("inventory.data.gov").
+                appendPath()
     }
 
 }
