@@ -49,15 +49,17 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             }
             // JSON of institution with INSTNM, WEBADDR, LATITUDE, & LONGITUD
             String UniversityJSON = build.toString();
-            Log.i(LOG_TAG, UniversityJSON);
+            //Log.i(LOG_TAG, UniversityJSON);
             ArrayList<String> UniversityList = getRecordArrayFromJSON(UniversityJSON);
 
-            //Log.i(LOG_TAG, UniversityList.toString());
+            Log.i(LOG_TAG, UniversityList.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
+            Log.wtf(LOG_TAG, e.toString());
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.wtf(LOG_TAG, e.toString());
         }
 
         return new String[0];
@@ -73,14 +75,13 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         JSONArray records = results.getJSONArray("records");
 
         ArrayList<String> universityList = new ArrayList();
-        JSONObject info = records.getJSONObject(0);
-        universityList.add(info.getString("INSTNM"));
-        universityList.add(info.getString("WEBADDR"));
-        universityList.add(info.getString("LATITUDE"));
-        universityList.add(info.getString("LONGITUD"));
+        JSONObject data = records.getJSONObject(0);
+        universityList.add(data.getString("INSTNM"));
+        universityList.add(data.getString("WEBADDR"));
+        universityList.add(data.getString("LATITUDE"));
+        universityList.add(data.getString("LONGITUD"));
 
         return universityList;
     }
-
 
 }
