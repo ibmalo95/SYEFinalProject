@@ -67,7 +67,7 @@ public class MainFragment extends Fragment {
         String url = builder.build().toString();
         Log.v(LOG_TAG, url);
 
-        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(this);
+        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask();
         getUniversityDataTask.execute(url);
     }
 
