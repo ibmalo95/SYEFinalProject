@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
         if (requestCode == ADD_REQUEST && resultCode == RESULT_OK) {
             college = result.getStringExtra(AddActivity.ADD);
             mainFragment.addCollege(college);
-            Log.i(LOG_TAG, college);
+            //Log.i(LOG_TAG, college);
         }
     }
 

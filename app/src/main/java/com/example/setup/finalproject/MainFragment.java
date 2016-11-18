@@ -53,6 +53,7 @@ public class MainFragment extends Fragment {
     // add college to the ListView
     // TODO get data from USED
     protected void addCollege(String college) {
+        // TODO add college to SQL table?
         colleges.add(college);
 
         Uri.Builder builder = new Uri.Builder();
@@ -65,7 +66,7 @@ public class MainFragment extends Fragment {
                 appendQueryParameter("q", "{\"INSTNM\":\"" + college + "\"}");
 
         String url = builder.build().toString();
-        Log.v(LOG_TAG, url);
+        //Log.v(LOG_TAG, url);
 
         GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask();
         getUniversityDataTask.execute(url);
