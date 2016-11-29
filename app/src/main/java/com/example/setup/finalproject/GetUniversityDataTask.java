@@ -31,7 +31,6 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         HttpsURLConnection urlConnection = null;
         BufferedReader reader = null;
 
-
         try {
             // get the URL and make a connection
             URL uri = new URL(url[0]);
@@ -50,7 +49,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             }
             // JSON of institution with INSTNM, WEBADDR, LATITUDE, & LONGITUD
             String UniversityJSON = build.toString();
-            //Log.i(LOG_TAG, UniversityJSON);
+            // Log.i(LOG_TAG, UniversityJSON);
             // Get an list comprised of the university name, url, and coordinates
             ArrayList<String> UniversityList = getRecordArrayFromJSON(UniversityJSON);
             Log.i(LOG_TAG, UniversityList.toString());
@@ -62,7 +61,6 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             e.printStackTrace();
             Log.wtf(LOG_TAG, e.toString());
         }
-
 
         return new String[0];
     }
