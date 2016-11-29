@@ -42,7 +42,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             InputStream inputStream = urlConnection.getInputStream();
             reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            // Build the JSON
+            // StringBuilder to represent the data
             String line = null;
             StringBuilder build = new StringBuilder();
             while ((line = reader.readLine()) != null) {
@@ -51,8 +51,8 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             // JSON of institution with INSTNM, WEBADDR, LATITUDE, & LONGITUD
             String UniversityJSON = build.toString();
             //Log.i(LOG_TAG, UniversityJSON);
+            // Get an list comprised of the university name, url, and coordinates
             ArrayList<String> UniversityList = getRecordArrayFromJSON(UniversityJSON);
-
             Log.i(LOG_TAG, UniversityList.toString());
 
         } catch (IOException e) {
