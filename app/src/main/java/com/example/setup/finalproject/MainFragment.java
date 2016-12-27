@@ -59,8 +59,9 @@ public class MainFragment extends Fragment {
                 LinearLayout listItem = (LinearLayout) view;
                 String name = ((TextView)listItem.findViewById(R.id.list_item)).getText().toString();
                 String url = collegeData.get(name).get(0);
+                String[] info = {name, url};
                 Intent intent = new Intent(getActivity(), ListItemActivity.class);
-                intent.putExtra("URL", url);
+                intent.putExtra("INFO", info);
                 startActivity(intent);
             }
         });
