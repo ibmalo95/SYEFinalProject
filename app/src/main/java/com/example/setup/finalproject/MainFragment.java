@@ -8,11 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -30,6 +33,7 @@ public class MainFragment extends Fragment {
 
     ArrayAdapter<String> collegesAdapter;
     List<String> colleges;
+    HashMap<String, ArrayList<String>> collegeData = new HashMap();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,15 @@ public class MainFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         list = (ListView) root.findViewById(R.id.college_list);
         list.setAdapter(collegesAdapter);
+        
+        list.setClickable(true);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(LOG_TAG, "Item Clicked!");
+            }
+
+        });
         return root;
     }
 
@@ -68,8 +81,18 @@ public class MainFragment extends Fragment {
         String url = builder.build().toString();
         //Log.v(LOG_TAG, url);
 
-        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask();
+        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(this);
         getUniversityDataTask.execute(url);
+    }
+
+    // Storing college info without SQLite
+    protected void setCollegeData(ArrayList<String> data) {
+        ArrayList<String> universityData = new ArrayList();
+        universityData.add(data.get(1));
+        universityData.add(data.get(2));
+        universityData.add(data.get(3));
+        collegeData.put(data.get(0), universityData);
+        Log.i(LOG_TAG, collegeData.toString());
     }
 
 }

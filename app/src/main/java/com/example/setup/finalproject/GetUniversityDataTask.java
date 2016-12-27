@@ -1,5 +1,6 @@
 package com.example.setup.finalproject;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -24,6 +25,11 @@ import javax.net.ssl.HttpsURLConnection;
 public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
     private static final String LOG_TAG = GetUniversityDataTask.class.getName();
+    private MainFragment ctx;
+
+    public GetUniversityDataTask(MainFragment ctx) {
+        this.ctx = ctx;
+    }
 
     @Override
     protected String[] doInBackground(String... url) {
@@ -51,8 +57,9 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             String UniversityJSON = build.toString();
             // Log.i(LOG_TAG, UniversityJSON);
             // Get an list comprised of the university name, url, and coordinates
-            ArrayList<String> UniversityList = getRecordArrayFromJSON(UniversityJSON);
-            Log.i(LOG_TAG, UniversityList.toString());
+            ArrayList<String> universityData = getRecordArrayFromJSON(UniversityJSON);
+            //Log.i(LOG_TAG, universityData.toString());
+            ctx.setCollegeData(universityData);
 
         } catch (IOException e) {
             e.printStackTrace();

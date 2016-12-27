@@ -44,11 +44,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public static void UniversityURL(SQLiteDatabase db) {
-        String [] columns = {UniversityDataContract.UniversityEntry.COLUMN_NAME_URL}
-        Cursor c = db.query(
-                UniversityDataContract.UniversityEntry.TABLE_NAME,
-                columns,
-                )
-    }
+//    public static void UniversityURL(SQLiteDatabase db) {
+//        String [] columns = {UniversityDataContract.UniversityEntry.COLUMN_NAME_URL}
+//        Cursor c = db.query(
+//                UniversityDataContract.UniversityEntry.TABLE_NAME,
+//                columns,
+//                )
+//    }
 }
