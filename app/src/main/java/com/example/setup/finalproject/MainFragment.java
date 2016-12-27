@@ -1,19 +1,20 @@
 package com.example.setup.finalproject;
 
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import java.lang.reflect.Array;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,6 @@ public class MainFragment extends Fragment {
         setRetainInstance(true);
         colleges = new ArrayList();
         collegesAdapter = new ArrayAdapter(getContext(), R.layout.list_item, R.id.list_item, colleges);
-
     }
 
     @Override
@@ -51,15 +51,22 @@ public class MainFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
         list = (ListView) root.findViewById(R.id.college_list);
         list.setAdapter(collegesAdapter);
-        
         list.setClickable(true);
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(LOG_TAG, "Item Clicked!");
+                LinearLayout listItem = (LinearLayout) view;
+                String name = ((TextView)listItem.findViewById(R.id.list_item)).getText().toString();
+                String url = collegeData.get(name).get(0);
+                Intent intent = new Intent(getActivity(), ListItemActivity.class);
+                intent.putExtra("URL", url);
+                startActivity(intent);
             }
-
         });
+
+
+
         return root;
     }
 
@@ -93,6 +100,9 @@ public class MainFragment extends Fragment {
         universityData.add(data.get(3));
         collegeData.put(data.get(0), universityData);
         Log.i(LOG_TAG, collegeData.toString());
+
     }
+
+
 
 }
