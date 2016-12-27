@@ -35,6 +35,7 @@ public class MainFragment extends Fragment {
     ArrayAdapter<String> collegesAdapter;
     List<String> colleges;
     HashMap<String, ArrayList<String>> collegeData = new HashMap();
+    String college;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,8 @@ public class MainFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LinearLayout listItem = (LinearLayout) view;
                 String name = ((TextView)listItem.findViewById(R.id.list_item)).getText().toString();
+                Log.i(LOG_TAG, name);
+                Log.i(LOG_TAG, collegeData.get(name).toString());
                 String url = collegeData.get(name).get(0);
                 String[] info = {name, url};
                 Intent intent = new Intent(getActivity(), ListItemActivity.class);
@@ -76,6 +79,8 @@ public class MainFragment extends Fragment {
     protected void addCollege(String college) {
         // TODO add college to SQL table?
         colleges.add(college);
+        this.college = college;
+
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https").authority("inventory.data.gov").
@@ -99,9 +104,9 @@ public class MainFragment extends Fragment {
         universityData.add(data.get(1));
         universityData.add(data.get(2));
         universityData.add(data.get(3));
-        collegeData.put(data.get(0), universityData);
-        Log.i(LOG_TAG, collegeData.toString());
 
+        collegeData.put(this.college, universityData);
+        Log.i(LOG_TAG, collegeData.toString());
     }
 
 
