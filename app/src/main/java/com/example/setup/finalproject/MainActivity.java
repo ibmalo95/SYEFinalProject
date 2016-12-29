@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
@@ -39,6 +40,14 @@ public class MainActivity extends Activity {
 
         // TODO: Add activity for the map view
         map  = (Button) findViewById(R.id.map);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                intent.putExtra("DATAMAP", mainFragment.collegeData);
+                startActivity(intent);
+            }
+        });
     }
 
     // Result from AddActivity

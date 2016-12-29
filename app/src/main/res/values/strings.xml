@@ -6,4 +6,5 @@
     <string name="add_button">add</string>
     <string name="map_button">Map</string>
     <string name="college_name">College Name</string>
+    <string name="title_activity_map">Map</string>
 </resources>
