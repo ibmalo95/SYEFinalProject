@@ -29,7 +29,7 @@ public class MainFragment extends Fragment {
 
     public static final String LOG_TAG = MainFragment.class.getName();
     public static final String RESOURCE_KEY = "38625c3d-5388-4c16-a30f-d105432553a4";
-    public static final String FIELDS = "INSTNM,WEBADDR,LATITUDE,LONGITUD";
+    public static final String FIELDS = "INSTNM,WEBADDR,LATITUDE,LONGITUD,ADDR,CITY,STABBR";
     ListView list = null;
 
     ArrayAdapter<String> collegesAdapter;
@@ -57,12 +57,15 @@ public class MainFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 LinearLayout listItem = (LinearLayout) view;
                 String name = ((TextView)listItem.findViewById(R.id.list_item)).getText().toString();
-                Log.i(LOG_TAG, name);
-                Log.i(LOG_TAG, collegeData.get(name).toString());
                 String url = collegeData.get(name).get(0);
-                String[] info = {name, url};
+                String address = collegeData.get(name).get(3);
+                String city = collegeData.get(name).get(4);
+                String state = collegeData.get(name).get(5);
+
+                String[] info = {name, url, address, city, state};
                 Intent intent = new Intent(getActivity(), ListItemActivity.class);
                 intent.putExtra("INFO", info);
                 startActivity(intent);
@@ -75,7 +78,6 @@ public class MainFragment extends Fragment {
     }
 
     // add college to the ListView
-    // TODO get data from USED
     protected void addCollege(String college) {
         // TODO add college to SQL table?
         colleges.add(college);
@@ -101,9 +103,12 @@ public class MainFragment extends Fragment {
     // Storing college info without SQLite
     protected void setCollegeData(ArrayList<String> data) {
         ArrayList<String> universityData = new ArrayList();
-        universityData.add(data.get(1));
-        universityData.add(data.get(2));
-        universityData.add(data.get(3));
+        universityData.add(data.get(1)); // url
+        universityData.add(data.get(2)); // latitude
+        universityData.add(data.get(3)); // longitude
+        universityData.add(data.get(4)); // address
+        universityData.add(data.get(5)); // city
+        universityData.add(data.get(6)); // state
 
         collegeData.put(this.college, universityData);
         Log.i(LOG_TAG, collegeData.toString());

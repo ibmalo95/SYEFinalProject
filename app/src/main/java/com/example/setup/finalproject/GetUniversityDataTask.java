@@ -88,6 +88,9 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         universityList.add(data.getString("WEBADDR"));
         universityList.add(data.getString("LATITUDE"));
         universityList.add(data.getString("LONGITUD"));
+        universityList.add(data.getString("ADDR"));
+        universityList.add(data.getString("CITY"));
+        universityList.add(data.getString("STABBR"));
 
         return universityList;
     }

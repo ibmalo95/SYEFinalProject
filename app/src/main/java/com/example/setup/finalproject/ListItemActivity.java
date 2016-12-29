@@ -13,6 +13,8 @@ public class ListItemActivity extends Activity {
     private TextView collegeName = null;
     private String url = null;
     private WebView webView;
+    private String addressText = null;
+    private TextView address = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,9 @@ public class ListItemActivity extends Activity {
         String[] info = getIntent().getStringArrayExtra("INFO");
         collegeName.setText(info[0]);
         url = "http://" + info[1];
+        addressText = info[2] + ", " + info[3] + ", " + info[4];
+        address = (TextView) findViewById(R.id.address);
+        address.setText(addressText);
         Log.i(LOG_TAG, url);
 
         webView = (WebView)findViewById(R.id.webview);
