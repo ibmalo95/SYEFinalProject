@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -46,13 +47,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap = googleMap;
 
         // TODO: use SQLite
+        ArrayList<LatLng> places = new ArrayList();
         for (String key: collegeData.keySet()) {
             ArrayList<String> college = collegeData.get(key);
             double lat = Double.parseDouble(college.get(1));
             double lon = Double.parseDouble(college.get(2));
             LatLng place = new LatLng(lat, lon);
+            places.add(place);
             mMap.addMarker(new MarkerOptions().position(place).title(key));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(place));
         }
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng place: places) {
+            builder.include(place);
+        }
+        LatLngBounds bounds = builder.build();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
     }
 }
