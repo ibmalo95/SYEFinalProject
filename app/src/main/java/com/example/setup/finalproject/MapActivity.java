@@ -57,11 +57,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             mMap.addMarker(new MarkerOptions().position(place).title(key));
         }
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (LatLng place: places) {
-            builder.include(place);
+        if (places.size() > 0) {
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (LatLng place: places) {
+                builder.include(place);
+            }
+
+            LatLngBounds bounds = builder.build();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
         }
-        LatLngBounds bounds = builder.build();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+        else {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.0902, 95.7129), 100));
+        }
+
     }
 }

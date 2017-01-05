@@ -72,8 +72,6 @@ public class MainFragment extends Fragment {
             }
         });
 
-
-
         return root;
     }
 
@@ -94,7 +92,6 @@ public class MainFragment extends Fragment {
                 appendQueryParameter("q", "{\"INSTNM\":\"" + college + "\"}");
 
         String url = builder.build().toString();
-        //Log.v(LOG_TAG, url);
 
         GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(this);
         getUniversityDataTask.execute(url);
