@@ -26,9 +26,11 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
     private static final String LOG_TAG = GetUniversityDataTask.class.getName();
     private MainFragment ctx;
+    private String id;
 
-    public GetUniversityDataTask(MainFragment ctx) {
+    public GetUniversityDataTask(MainFragment ctx, String id) {
         this.ctx = ctx;
+        this.id = id;
     }
 
     @Override

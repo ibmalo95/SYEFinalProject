@@ -25,6 +25,12 @@
         android:layout_marginLeft="@dimen/button_margin"/>
 
     <Button
+        android:id="@+id/home"
+        style="@style/list_view_buttons"
+        android:text="@string/home"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
         android:id="@+id/add"
         style="@style/list_view_buttons"
         android:text="@string/add_button"

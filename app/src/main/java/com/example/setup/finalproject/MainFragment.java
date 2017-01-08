@@ -30,6 +30,7 @@ public class MainFragment extends Fragment {
     public static final String LOG_TAG = MainFragment.class.getName();
     public static final String RESOURCE_KEY = "38625c3d-5388-4c16-a30f-d105432553a4";
     public static final String FIELDS = "INSTNM,WEBADDR,LATITUDE,LONGITUD,ADDR,CITY,STABBR";
+    public static final String ID = "COLLEGE";
     ListView list = null;
 
     ArrayAdapter<String> collegesAdapter;
@@ -77,7 +78,7 @@ public class MainFragment extends Fragment {
 
     // add college to the ListView
     protected void addCollege(String college) {
-        // TODO add college to SQL table?
+        // TODO add college to SQLite table?
         colleges.add(college);
         this.college = college;
 
@@ -93,7 +94,7 @@ public class MainFragment extends Fragment {
 
         String url = builder.build().toString();
 
-        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(this);
+        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(this, ID);
         getUniversityDataTask.execute(url);
     }
 
@@ -110,6 +111,8 @@ public class MainFragment extends Fragment {
         collegeData.put(this.college, universityData);
         Log.i(LOG_TAG, collegeData.toString());
     }
+
+    // TODO: Rework above method to use SQLite
 
 
 
