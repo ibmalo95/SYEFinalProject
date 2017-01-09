@@ -28,15 +28,18 @@ public class HomeActivity extends Activity {
         state = (Spinner) findViewById(R.id.state);
         set = (Button) findViewById(R.id.set_home);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.states, android.R.layout.simple_spinner_dropdown_item);
-        state.setAdapter(adapter);
-
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 1600+Amphitheatre+Parkway,+Mountain+View,+CA
                 if (street != null && city != null && state != null) {
-                    String address = street.getText().toString() + city.getText().toString() + state.
+                    String street_value = street.getText().toString();
+                    street_value.replace(' ', '+');
+
+                    String city_value = city.getText().toString();
+                    city_value.replace(' ', '+');
+
+                    String address = street_value + ",+" + city_value + ",+" + state.getSelectedItem().toString();
                     Intent result = new Intent();
                     result.putExtra(HOME, address);
                     setResult(RESULT_OK, result);

@@ -1,6 +1,7 @@
 package com.example.setup.finalproject;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -55,13 +56,20 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
             while ((line = reader.readLine()) != null) {
                 build.append(line);
             }
-            // JSON of institution with INSTNM, WEBADDR, LATITUDE, & LONGITUD
+            // Returned JSON object
             String UniversityJSON = build.toString();
-            // Log.i(LOG_TAG, UniversityJSON);
-            // Get an list comprised of the university name, url, and coordinates
-            ArrayList<String> universityData = getRecordArrayFromJSON(UniversityJSON);
-            //Log.i(LOG_TAG, universityData.toString());
-            ctx.setCollegeData(universityData);
+
+            // Get a list comprised of the university name, url, coordinates, and address
+            if (id.equals("COLLEGE")) {
+                ArrayList<String> universityData = getRecordArrayFromJSON(UniversityJSON);
+                ctx.setCollegeData(universityData);
+            }
+
+            // Google Geocoding api: get the lat and lng from address
+            if (id.equals("HOME")) {
+                ArrayList<String> homeLatLon = getGeometryArrayFromJSON(UniversityJSON);
+                ctx.addHome(homeLatLon);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,6 +83,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
     }
 
 
+    // parse the JSON returned from the US Department of Education
     protected ArrayList<String> getRecordArrayFromJSON(String JSON) throws JSONException {
         JSONObject universityInfo = null;
         // Full JSON
@@ -86,15 +95,31 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
         ArrayList<String> universityList = new ArrayList();
         JSONObject data = records.getJSONObject(0);
-        universityList.add(data.getString("INSTNM"));
-        universityList.add(data.getString("WEBADDR"));
-        universityList.add(data.getString("LATITUDE"));
-        universityList.add(data.getString("LONGITUD"));
-        universityList.add(data.getString("ADDR"));
-        universityList.add(data.getString("CITY"));
-        universityList.add(data.getString("STABBR"));
+        universityList.add(data.getString("INSTNM")); // name
+        universityList.add(data.getString("WEBADDR")); // url
+        universityList.add(data.getString("LATITUDE")); // lat
+        universityList.add(data.getString("LONGITUD")); // lng
+        universityList.add(data.getString("ADDR")); // street
+        universityList.add(data.getString("CITY")); // city
+        universityList.add(data.getString("STABBR")); // state
 
         return universityList;
+    }
+
+    // parse the JSON returned from Google Geocoding api
+    protected ArrayList<String> getGeometryArrayFromJSON(String JSON) throws JSONException {
+        ArrayList<String> latlon = new ArrayList();
+        JSONObject homeInfo = null;
+        homeInfo = new JSONObject(JSON);
+        JSONArray results = homeInfo.getJSONArray("results");
+        JSONObject object = results.getJSONObject(0);
+        JSONObject geometry = object.getJSONObject("geometry");
+        JSONObject location = geometry.getJSONObject("location");
+
+        latlon.add(location.getString("lat"));
+        latlon.add(location.getString("lng"));
+
+        return latlon;
     }
 
 }

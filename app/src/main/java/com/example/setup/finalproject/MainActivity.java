@@ -72,7 +72,6 @@ public class MainActivity extends Activity {
         }
         if (requestCode == HOME_REQUEST && resultCode == RESULT_OK) {
             String address = result.getStringExtra(HomeActivity.HOME);
-            // TODO: Geocoding (get the lat and lon from address)
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("https").authority("maps.googleapis.com").
@@ -85,8 +84,10 @@ public class MainActivity extends Activity {
 
             String url = builder.build().toString();
             GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(mainFragment, ID);
-            getUniversityDataTask.execute();
+            getUniversityDataTask.execute(url);
         }
     }
+
+
 
 }

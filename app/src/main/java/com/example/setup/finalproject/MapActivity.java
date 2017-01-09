@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// TODO Zoom the camera to show all of the markers
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -46,12 +45,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // TODO: use SQLite
+        // TODO: access data using SQLite
         ArrayList<LatLng> places = new ArrayList();
         for (String key: collegeData.keySet()) {
-            ArrayList<String> college = collegeData.get(key);
-            double lat = Double.parseDouble(college.get(1));
-            double lon = Double.parseDouble(college.get(2));
+            double lat = 0.0;
+            double lon = 0.0;
+            ArrayList<String> data = collegeData.get(key);
+            if (key.equals("HOME")) {
+                lat = Double.parseDouble(data.get(0));
+                lon = Double.parseDouble(data.get(1));
+            }
+            else {
+                lat = Double.parseDouble(data.get(1));
+                lon = Double.parseDouble(data.get(2));
+            }
             LatLng place = new LatLng(lat, lon);
             places.add(place);
             mMap.addMarker(new MarkerOptions().position(place).title(key));

@@ -98,6 +98,10 @@ public class MainFragment extends Fragment {
         getUniversityDataTask.execute(url);
     }
 
+    protected void addHome(ArrayList<String> homeLatLon) {
+        collegeData.put("HOME", homeLatLon);
+    }
+
     // Storing college info without SQLite
     protected void setCollegeData(ArrayList<String> data) {
         ArrayList<String> universityData = new ArrayList();
