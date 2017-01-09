@@ -21,6 +21,7 @@ import java.util.List;
 
 
 /**
+ * TODO: Requires change from hashmap to SQLite
  * A simple {@link Fragment} subclass.
  */
 public class MainFragment extends Fragment {
@@ -43,7 +44,7 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         colleges = new ArrayList();
-        collegesAdapter = new ArrayAdapter(getContext(), R.layout.list_item, R.id.list_item, colleges);
+        collegesAdapter = new CustomAdapter(getContext(), R.layout.list_item, colleges, this);
     }
 
     @Override
@@ -54,25 +55,6 @@ public class MainFragment extends Fragment {
         list = (ListView) root.findViewById(R.id.college_list);
         list.setAdapter(collegesAdapter);
         list.setClickable(true);
-
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                LinearLayout listItem = (LinearLayout) view;
-                String name = ((TextView)listItem.findViewById(R.id.list_item)).getText().toString();
-                String url = collegeData.get(name).get(0);
-                String address = collegeData.get(name).get(3);
-                String city = collegeData.get(name).get(4);
-                String state = collegeData.get(name).get(5);
-
-                String[] info = {name, url, address, city, state};
-                Intent intent = new Intent(getActivity(), ListItemActivity.class);
-                intent.putExtra("INFO", info);
-                startActivity(intent);
-            }
-        });
-
         return root;
     }
 
