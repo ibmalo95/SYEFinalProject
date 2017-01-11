@@ -1,6 +1,7 @@
 package com.example.setup.finalproject;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -27,10 +28,18 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
     private static final String LOG_TAG = GetUniversityDataTask.class.getName();
     private MainFragment ctx;
+    private AddActivity act;
     private String id;
+    private String[] entries;
+    private JSONArray records;
 
     public GetUniversityDataTask(MainFragment ctx, String id) {
         this.ctx = ctx;
+        this.id = id;
+    }
+
+    public GetUniversityDataTask(AddActivity act, String id) {
+        this.act = act;
         this.id = id;
     }
 
@@ -61,8 +70,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
             // Get a list comprised of the university name, url, coordinates, and address
             if (id.equals("COLLEGE")) {
-                ArrayList<String> universityData = getRecordArrayFromJSON(UniversityJSON);
-                ctx.setCollegeData(universityData);
+                getRecordArrayFromJSON(UniversityJSON);
             }
 
             // Google Geocoding api: get the lat and lng from address
@@ -82,29 +90,36 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         return new String[0];
     }
 
+    @Override
+    protected void onPostExecute(String[] strings) {
+        super.onPostExecute(strings);
+
+        if (id.equals("COLLEGE")) {
+            act.setEntries(entries, records);
+        }
+    }
 
     // parse the JSON returned from the US Department of Education
-    protected ArrayList<String> getRecordArrayFromJSON(String JSON) throws JSONException {
+    protected void getRecordArrayFromJSON(String JSON) throws JSONException {
         JSONObject universityInfo = null;
         // Full JSON
         universityInfo = new JSONObject(JSON);
         // Results object
         JSONObject results = universityInfo.getJSONObject("result");
         // Records array: has name, university url, and location data
-        JSONArray records = results.getJSONArray("records");
+        records = results.getJSONArray("records");
 
-        ArrayList<String> universityList = new ArrayList();
-        JSONObject data = records.getJSONObject(0);
-        universityList.add(data.getString("INSTNM")); // name
-        universityList.add(data.getString("WEBADDR")); // url
-        universityList.add(data.getString("LATITUDE")); // lat
-        universityList.add(data.getString("LONGITUD")); // lng
-        universityList.add(data.getString("ADDR")); // street
-        universityList.add(data.getString("CITY")); // city
-        universityList.add(data.getString("STABBR")); // state
+        entries = new String[records.length()];
 
-        return universityList;
+        for (int i = 0; i < records.length(); i++) {
+            JSONObject data = records.getJSONObject(i);
+            String name = data.getString("INSTNM"); // name
+            String state = data.getString("STABBR"); // state
+            String spinner_entry = name + "-" + state;
+            entries[i] = spinner_entry;
+        }
     }
+
 
     // parse the JSON returned from Google Geocoding api
     protected ArrayList<String> getGeometryArrayFromJSON(String JSON) throws JSONException {

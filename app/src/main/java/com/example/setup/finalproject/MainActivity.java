@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -24,7 +26,6 @@ public class MainActivity extends Activity {
     Button add = null;
     Button map = null;
     Button home = null;
-    String college = null;
     private MainFragment mainFragment;
 
     @Override
@@ -63,12 +64,11 @@ public class MainActivity extends Activity {
         });
     }
 
-    // Result from AddActivity
+    // Result from AddActivity or HomeActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
         if (requestCode == ADD_REQUEST && resultCode == RESULT_OK) {
-            college = result.getStringExtra(AddActivity.ADD);
-            mainFragment.addCollege(college);
-            //Log.i(LOG_TAG, college);
+            ArrayList<String> college_data = (ArrayList<String>) result.getSerializableExtra(AddActivity.ADD);
+            mainFragment.addCollege(college_data);
         }
         if (requestCode == HOME_REQUEST && resultCode == RESULT_OK) {
             String address = result.getStringExtra(HomeActivity.HOME);
@@ -87,7 +87,4 @@ public class MainActivity extends Activity {
             getUniversityDataTask.execute(url);
         }
     }
-
-
-
 }

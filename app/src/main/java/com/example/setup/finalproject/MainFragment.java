@@ -37,7 +37,6 @@ public class MainFragment extends Fragment {
     ArrayAdapter<String> collegesAdapter;
     List<String> colleges;
     HashMap<String, ArrayList<String>> collegeData = new HashMap();
-    String college;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,46 +58,19 @@ public class MainFragment extends Fragment {
     }
 
     // add college to the ListView
-    protected void addCollege(String college) {
+    protected void addCollege(ArrayList<String> college_data) {
         // TODO add college to SQLite table?
-        colleges.add(college);
-        this.college = college;
-
-
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https").authority("inventory.data.gov").
-                appendPath("api").
-                appendPath("action").
-                appendPath("datastore_search").
-                appendQueryParameter("resource_id", RESOURCE_KEY).
-                appendQueryParameter("fields", FIELDS).
-                appendQueryParameter("q", "{\"INSTNM\":\"" + college + "\"}");
-
-        String url = builder.build().toString();
-
-        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(this, ID);
-        getUniversityDataTask.execute(url);
+        String key = college_data.get(0);
+        colleges.add(key);
+        college_data.remove(key);
+        collegeData.put(key, college_data);
     }
 
     protected void addHome(ArrayList<String> homeLatLon) {
         collegeData.put("HOME", homeLatLon);
     }
 
-    // Storing college info without SQLite
-    protected void setCollegeData(ArrayList<String> data) {
-        ArrayList<String> universityData = new ArrayList();
-        universityData.add(data.get(1)); // url
-        universityData.add(data.get(2)); // latitude
-        universityData.add(data.get(3)); // longitude
-        universityData.add(data.get(4)); // address
-        universityData.add(data.get(5)); // city
-        universityData.add(data.get(6)); // state
-
-        collegeData.put(this.college, universityData);
-        Log.i(LOG_TAG, collegeData.toString());
-    }
-
-    // TODO: Rework above method to use SQLite
+    // TODO: Rework above 2 methods to use SQLite
 
 
 

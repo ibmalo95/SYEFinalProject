@@ -11,6 +11,7 @@
     <string name="set">Set</string>
     <string name="street">Street</string>
     <string name="city">City</string>
+    <string name="search">Search</string>
 
     <string-array name="states">
         <item>AL</item>
