@@ -6,6 +6,9 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+/*
+ * The college view; where the individual college info can be seen
+ */
 public class ListItemActivity extends Activity {
 
     public static final String LOG_TAG = ListItemActivity.class.getName();
@@ -28,7 +31,6 @@ public class ListItemActivity extends Activity {
         addressText = info[2] + ", " + info[3] + ", " + info[4];
         address = (TextView) findViewById(R.id.address);
         address.setText(addressText);
-        Log.i(LOG_TAG, url);
 
         webView = (WebView)findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);

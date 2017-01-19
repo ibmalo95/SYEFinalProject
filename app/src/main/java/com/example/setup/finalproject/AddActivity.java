@@ -20,6 +20,9 @@ import java.util.ArrayList;
 
 
 // TODO: Requires change from hashmap to SQLite
+/*
+ * User can search and add colleges to their list
+ */
 public class AddActivity extends Activity {
 
     public static final String ADD = "com.example.setup.AddActivity.ADD";
@@ -113,6 +116,7 @@ public class AddActivity extends Activity {
                     android.R.layout.simple_spinner_item, entries);
             spinner.setAdapter(adapter);
             spinner.setVisibility(View.VISIBLE);
+            add_college.setVisibility(View.VISIBLE);
         }
         add_college.setVisibility(View.VISIBLE);
 

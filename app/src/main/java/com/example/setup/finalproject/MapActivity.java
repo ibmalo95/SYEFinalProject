@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 // TODO: Requires change from hashmap to SQLite
+/*
+ * displays map and markers
+ */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

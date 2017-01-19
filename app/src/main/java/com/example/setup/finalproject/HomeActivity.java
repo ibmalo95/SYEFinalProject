@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/*
+ * User can add home address
+ */
 public class HomeActivity extends Activity {
 
     public static final String HOME = "com.example.setup.HomeActivity.HOME";

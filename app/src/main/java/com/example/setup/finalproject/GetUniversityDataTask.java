@@ -1,8 +1,6 @@
 package com.example.setup.finalproject;
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -22,6 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Ina on 11/15/16.
+ * Access either USED or Geocoding API in order to retrieve data
  */
 
 public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{

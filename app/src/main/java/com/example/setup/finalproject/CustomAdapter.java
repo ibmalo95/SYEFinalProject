@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * TODO: Requires change from hashmap to SQLite
  * Created by Ina on 1/9/17.
+ * Custom Adapter used to populate the list view
  */
 
 // TODO: when sql is implemented will be able to access data directly from here (not dependent on fragment)
