@@ -83,10 +83,8 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
                 String url = data.get(0);
                 String address = data.get(3);
-                String city = data.get(4);
-                String state = data.get(5);
 
-                String[] info = {name, url, address, city, state};
+                String[] info = {name, url, address};
                 Intent intent = new Intent(fragment.getActivity(), ListItemActivity.class);
                 intent.putExtra("INFO", info);
                 fragment.startActivity(intent);

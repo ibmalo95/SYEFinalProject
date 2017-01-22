@@ -2,9 +2,13 @@ package com.example.setup.finalproject;
 
 
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +42,11 @@ public class MainFragment extends Fragment {
     List<String> colleges;
     HashMap<String, ArrayList<String>> collegeData = new HashMap();
 
+    // SQLite instance data
+    private DBHelper dbHelper = null;
+    private SQLiteDatabase db = null;
+    private Handler handler = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +68,72 @@ public class MainFragment extends Fragment {
 
     // add college to the ListView
     protected void addCollege(ArrayList<String> college_data) {
-        // TODO add college to SQLite table?
+
+        // Store with HashMap
         String key = college_data.get(0);
         colleges.add(key);
         college_data.remove(key);
         collegeData.put(key, college_data);
+
+
+        // Store with SQLite
+//        handler = new Handler();
+//        dbHelper = new DBHelper(getContext());
+//        new CreateDB(college_data).execute();
     }
 
     protected void addHome(ArrayList<String> homeLatLon) {
+
+        // TODO: Store with preferences or in table?
         collegeData.put("HOME", homeLatLon);
     }
 
     // TODO: Rework above 2 methods to use SQLite
 
 
+    // ********************************** SQLite ***************************************************
+
+
+    private class CreateDB extends AsyncTask<Void, Void, SQLiteDatabase> {
+
+        ArrayList<String> data = null;
+        String id = null;
+
+        public CreateDB(ArrayList<String> data) {
+            this.data = data;
+            this.id = data.get(0);
+        }
+
+        @Override
+        protected SQLiteDatabase doInBackground(Void... params) {
+            // Creates or opens the database
+            // The first time it is called onCreate, onUpgrade run
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+
+            // Insert data into the database
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id);
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_URL, data.get(1)); // URL
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON, data.get(3)); // Long
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR, data.get(4)); // Address
+
+            long rowID = db.insert(UniversityDataContract.UniversityEntry.TABLE_NAME, null, values);
+
+            return db;
+        }
+        @Override
+        protected void onPostExecute(SQLiteDatabase db) {
+            super.onPostExecute(db);
+
+            MainFragment.this.db = db;
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    // queries
+                }
+            });
+        }
+    }
 
 }

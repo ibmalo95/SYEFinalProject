@@ -1,19 +1,19 @@
 package com.example.setup.finalproject;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 
-import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import android.os.Handler;
 
 public class MainActivity extends Activity {
 
@@ -27,6 +27,8 @@ public class MainActivity extends Activity {
     Button map = null;
     Button home = null;
     private MainFragment mainFragment;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +68,12 @@ public class MainActivity extends Activity {
 
     // Result from AddActivity or HomeActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+
+        // store the data retrieved from the add activity
         if (requestCode == ADD_REQUEST && resultCode == RESULT_OK) {
             ArrayList<String> college_data = (ArrayList<String>) result.getSerializableExtra(AddActivity.ADD);
             mainFragment.addCollege(college_data);
+
         }
         if (requestCode == HOME_REQUEST && resultCode == RESULT_OK) {
             String address = result.getStringExtra(HomeActivity.HOME);
@@ -87,4 +92,6 @@ public class MainActivity extends Activity {
             getUniversityDataTask.execute(url);
         }
     }
+
+
 }

@@ -17,5 +17,6 @@ public class UniversityDataContract {
         public static final String COLUMN_NAME_URL = "url";
         public static final String COLUMN_NAME_LAT = "latitude";
         public static final String COLUMN_NAME_LON = "longitude";
+        public static final String COLUMN_NAME_ADDR = "address";
     }
 }

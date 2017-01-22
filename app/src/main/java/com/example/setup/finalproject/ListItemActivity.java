@@ -28,7 +28,7 @@ public class ListItemActivity extends Activity {
         String[] info = getIntent().getStringArrayExtra("INFO");
         collegeName.setText(info[0]);
         url = "http://" + info[1];
-        addressText = info[2] + ", " + info[3] + ", " + info[4];
+        addressText = info[2];
         address = (TextView) findViewById(R.id.address);
         address.setText(addressText);
 

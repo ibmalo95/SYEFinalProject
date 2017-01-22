@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-// TODO: Requires change from hashmap to SQLite
 /*
  * User can search and add colleges to their list
  */
@@ -89,9 +88,8 @@ public class AddActivity extends Activity {
                     dataInfo.add(data.getString("WEBADDR")); // url
                     dataInfo.add(data.getString("LATITUDE")); // lat
                     dataInfo.add(data.getString("LONGITUD")); // lng
-                    dataInfo.add(data.getString("ADDR")); // street
-                    dataInfo.add(data.getString("CITY")); // city
-                    dataInfo.add(data.getString("STABBR")); // state
+                    String address = data.getString("ADDR") + ", " + data.getString("CITY") + ", " + data.getString("STABBR");
+                    dataInfo.add(address); // address
 
                     // return college name
                     Intent result = new Intent();

@@ -13,8 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG = DBHelper.class.getName();
-    public static final String DATABASE_NAME = "university's.db";
+    public static final String DATABASE_NAME = "university.db";
     public static final int DATABASE_VERSION = 1;
+
     // create table
     public static final String SQL_CREATE_UNIVERSITY_TABLE =
             "CREATE TABLE "
@@ -24,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     + UniversityDataContract.UniversityEntry.COLUMN_NAME_URL + " varchar not null, "
                     + UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT + " varchar not null, "
                     + UniversityDataContract.UniversityEntry.COLUMN_NAME_LON + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR + " varchar not null, "
                     + "PRIMARY KEY (" + UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + "))";
 
     // drop table
@@ -35,14 +37,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context ctx) {
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION );
     }
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
+    // Called when the database is created for the first time
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_UNIVERSITY_TABLE);
     }
 
+    // Called when the database needs to be upgraded. Method used to add and drop tables
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL(SQL_DROP_UNIVERSITY_TABLE);
+        onCreate(db);
     }
 
 }
