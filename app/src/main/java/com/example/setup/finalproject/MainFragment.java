@@ -30,16 +30,11 @@ import java.util.List;
  */
 public class MainFragment extends Fragment {
 
-    //https://inventory.data.gov/api/action/datastore_search?resource_id=38625c3d-5388-4c16-a30f-d105432553a4&fields=INSTNM,WEBADDR&q={%22INSTNM%22:%22clarkson%22}
-
     public static final String LOG_TAG = MainFragment.class.getName();
-    public static final String RESOURCE_KEY = "38625c3d-5388-4c16-a30f-d105432553a4";
-    public static final String FIELDS = "INSTNM,WEBADDR,LATITUDE,LONGITUD,ADDR,CITY,STABBR";
-    public static final String ID = "COLLEGE";
-    ListView list = null;
 
+    ListView list = null;
     ArrayAdapter<String> collegesAdapter;
-    List<String> colleges;
+    List<String> colleges; // TODO: Saving... go through SQLite table and store college names
     HashMap<String, ArrayList<String>> collegeData = new HashMap();
 
     // SQLite instance data
@@ -101,7 +96,7 @@ public class MainFragment extends Fragment {
 
         public CreateDB(ArrayList<String> data) {
             this.data = data;
-            this.id = data.get(0);
+            this.id = data.get(5);
         }
 
         @Override
@@ -113,6 +108,7 @@ public class MainFragment extends Fragment {
 
             // Insert data into the database
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id);
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME, data.get(0)); // name
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_URL, data.get(1)); // URL
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON, data.get(3)); // Long

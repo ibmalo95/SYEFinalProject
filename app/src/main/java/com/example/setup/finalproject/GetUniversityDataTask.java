@@ -30,7 +30,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
     private AddActivity act;
     private String id;
     private String[] entries;
-    private JSONArray records;
+    private JSONArray results;
 
     public GetUniversityDataTask(MainFragment ctx, String id) {
         this.ctx = ctx;
@@ -94,7 +94,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         super.onPostExecute(strings);
 
         if (id.equals("COLLEGE")) {
-            act.setEntries(entries, records);
+            act.setEntries(entries, results);
         }
     }
 
@@ -104,16 +104,14 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         // Full JSON
         universityInfo = new JSONObject(JSON);
         // Results object
-        JSONObject results = universityInfo.getJSONObject("result");
-        // Records array: has name, university url, and location data
-        records = results.getJSONArray("records");
+        results = universityInfo.getJSONArray("results");
 
-        entries = new String[records.length()];
+        entries = new String[results.length()];
 
-        for (int i = 0; i < records.length(); i++) {
-            JSONObject data = records.getJSONObject(i);
-            String name = data.getString("INSTNM"); // name
-            String state = data.getString("STABBR"); // state
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject data = results.getJSONObject(i);
+            String name = data.getString("school.name"); // name
+            String state = data.getString("school.state"); // state
             String spinner_entry = name + "-" + state;
             entries[i] = spinner_entry;
         }

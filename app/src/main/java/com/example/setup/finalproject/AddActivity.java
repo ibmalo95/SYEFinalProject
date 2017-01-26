@@ -25,8 +25,8 @@ import java.util.ArrayList;
 public class AddActivity extends Activity {
 
     public static final String ADD = "com.example.setup.AddActivity.ADD";
-    public static final String RESOURCE_KEY = "38625c3d-5388-4c16-a30f-d105432553a4";
-    public static final String FIELDS = "INSTNM,WEBADDR,LATITUDE,LONGITUD,ADDR,CITY,STABBR";
+    public static final String API_KEY = "zTvIDBIb2oguISKw9f0NSMLesMx3TLM4Q8m5MCAk";
+    public static final String FIELDS = "id,school.name,school.city,school.state,location.lat,location.lon,school.school_url";
     public static final String ID = "COLLEGE";
 
     EditText college_name = null;
@@ -50,15 +50,17 @@ public class AddActivity extends Activity {
                 String name = college_name.getText().toString();
                 if (!name.isEmpty()) {
 
-
                     Uri.Builder builder = new Uri.Builder();
-                    builder.scheme("https").authority("inventory.data.gov").
-                            appendPath("api").
-                            appendPath("action").
-                            appendPath("datastore_search").
-                            appendQueryParameter("resource_id", RESOURCE_KEY).
+                    builder.scheme("https").authority("api.data.gov").
+                            appendPath("ed").
+                            appendPath("collegescorecard").
+                            appendPath("v1").
+                            appendPath("schools").
+                            appendPath("json").
+                            appendQueryParameter("school.name", name).
                             appendQueryParameter("fields", FIELDS).
-                            appendQueryParameter("q", "{\"INSTNM\":\"" + name + "\"}");
+                            appendQueryParameter("api_key", API_KEY);
+
 
                     String url = builder.build().toString();
 
@@ -77,19 +79,21 @@ public class AddActivity extends Activity {
             public void onClick(View v) {
                 // Get the college that the user selected, store the corresponding data and return to mainactivity
 
+
                 int index = spinner.getSelectedItemPosition();
                 try {
                     JSONObject data = list.getJSONObject(index);
 
                     // Store the data
-                    String key = data.getString("INSTNM"); // name
+                    String key = data.getString("school.name"); // name
                     ArrayList<String> dataInfo = new ArrayList();
                     dataInfo.add(key);
-                    dataInfo.add(data.getString("WEBADDR")); // url
-                    dataInfo.add(data.getString("LATITUDE")); // lat
-                    dataInfo.add(data.getString("LONGITUD")); // lng
-                    String address = data.getString("ADDR") + ", " + data.getString("CITY") + ", " + data.getString("STABBR");
+                    dataInfo.add(data.getString("school.school_url")); // url
+                    dataInfo.add(data.getString("location.lat")); // lat
+                    dataInfo.add(data.getString("location.lon")); // lng
+                    String address = data.getString("school.city") + ", " + data.getString("school.state");
                     dataInfo.add(address); // address
+                    dataInfo.add(data.getString("id")); // id number
 
                     // return college name
                     Intent result = new Intent();
