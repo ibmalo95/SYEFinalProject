@@ -93,7 +93,6 @@ public class AddActivity extends Activity {
                     dataInfo.add(data.getString("location.lon")); // lng
                     String address = data.getString("school.city") + ", " + data.getString("school.state");
                     dataInfo.add(address); // address
-                    dataInfo.add(data.getString("id")); // id number
 
                     // return college name
                     Intent result = new Intent();

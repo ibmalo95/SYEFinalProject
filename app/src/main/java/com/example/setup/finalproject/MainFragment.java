@@ -39,8 +39,8 @@ public class MainFragment extends Fragment {
 
     // SQLite instance data
     private DBHelper dbHelper = null;
-    private SQLiteDatabase db = null;
-    private Handler handler = null;
+    protected SQLiteDatabase db = null;
+    //private Handler handler = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,17 +64,19 @@ public class MainFragment extends Fragment {
     // add college to the ListView
     protected void addCollege(ArrayList<String> college_data) {
 
-        // Store with HashMap
         String key = college_data.get(0);
         colleges.add(key);
-        college_data.remove(key);
-        collegeData.put(key, college_data);
+
+        // Store with HashMap
+//        college_data.remove(key);
+//        collegeData.put(key, college_data);
 
 
         // Store with SQLite
-//        handler = new Handler();
-//        dbHelper = new DBHelper(getContext());
-//        new CreateDB(college_data).execute();
+        //handler = new Handler();
+        dbHelper = new DBHelper(getContext());
+        String id = "" + colleges.indexOf(key);
+        new CreateDB(college_data, id).execute();
     }
 
     protected void addHome(ArrayList<String> homeLatLon) {
@@ -92,11 +94,11 @@ public class MainFragment extends Fragment {
     private class CreateDB extends AsyncTask<Void, Void, SQLiteDatabase> {
 
         ArrayList<String> data = null;
-        String id = null;
+        String id;
 
-        public CreateDB(ArrayList<String> data) {
+        public CreateDB(ArrayList<String> data, String id) {
             this.data = data;
-            this.id = data.get(5);
+            this.id = id;
         }
 
         @Override
@@ -107,7 +109,7 @@ public class MainFragment extends Fragment {
             ContentValues values = new ContentValues();
 
             // Insert data into the database
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id);
+            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id); // make the id be the index of where it is in colleges list
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME, data.get(0)); // name
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_URL, data.get(1)); // URL
             values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
@@ -118,17 +120,24 @@ public class MainFragment extends Fragment {
 
             return db;
         }
+
+
         @Override
         protected void onPostExecute(SQLiteDatabase db) {
             super.onPostExecute(db);
 
+
+            // set db to this database
             MainFragment.this.db = db;
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    // queries
-                }
-            });
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    // queries
+//                    // Does this need to happen here?
+//                    // When we are initially adding a college we just need to add a row to the database
+//                    // Need to query when a listview item is tapped (in CursorAdapter) or in map activity
+//                }
+//            });
         }
     }
 

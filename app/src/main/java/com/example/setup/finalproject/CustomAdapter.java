@@ -57,7 +57,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
-        //Handle TextView and display string from your list
+        // Handle TextView and display string from your list
         final TextView listItemText = (TextView)view.findViewById(R.id.list_item);
         listItemText.setText(colleges.get(position));
         ImageButton delete = (ImageButton)view.findViewById(R.id.delete);
@@ -68,8 +68,13 @@ public class CustomAdapter extends ArrayAdapter<String>{
             public void onClick(View v) {
                 colleges.remove(i);
                 notifyDataSetChanged();
-                // TODO: delete from SQLite table instead of hashmap
-                fragment.collegeData.remove(listItemText.getText().toString());
+
+                // HASHMAP
+                //fragment.collegeData.remove(listItemText.getText().toString());
+
+                // SQLITE
+                String id = "" + position;
+                DBQueries.deleteRow(fragment.db, id);
             }
         });
 
@@ -78,15 +83,21 @@ public class CustomAdapter extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
 
-                String name = listItemText.getText().toString();
-                ArrayList<String> data = fragment.collegeData.get(name);
 
-                String url = data.get(0);
-                String address = data.get(3);
+                // HASHMAP
+//                String name = listItemText.getText().toString();
+//                ArrayList<String> data = fragment.collegeData.get(name);
+//                String url = data.get(0);
+//                String address = data.get(3);
 
-                String[] info = {name, url, address};
+                // SQLITE
+                String id = "" + position;
+                ArrayList<String> items = DBQueries.getRow(fragment.db, id);
+
+                // can't cast string[] because its an object[]
+
                 Intent intent = new Intent(fragment.getActivity(), ListItemActivity.class);
-                intent.putExtra("INFO", info);
+                intent.putExtra("INFO", items);
                 fragment.startActivity(intent);
             }
         });
