@@ -1,7 +1,10 @@
 package com.example.setup.finalproject;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,8 +23,11 @@ import java.util.HashMap;
  */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final String ID = "MAP";
+    private static final String LOG_TAG = MapActivity.class.getName();
+
     private GoogleMap mMap;
-    private HashMap<String, ArrayList<String>> collegeData;
+    private HashMap<String,String[]> coordinates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +38,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        collegeData = (HashMap<String, ArrayList<String>>) getIntent().getSerializableExtra("DATAMAP");
+        coordinates = (HashMap<String,String[]>) getIntent().getSerializableExtra("DATA");
     }
 
 
@@ -49,23 +55,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // TODO: access data using SQLite
         ArrayList<LatLng> places = new ArrayList();
-        for (String key: collegeData.keySet()) {
-            double lat = 0.0;
-            double lon = 0.0;
-            ArrayList<String> data = collegeData.get(key);
-            if (key.equals("HOME")) {
-                lat = Double.parseDouble(data.get(0));
-                lon = Double.parseDouble(data.get(1));
+        if (coordinates != null) {
+            for (String key: coordinates.keySet()) {
+                double lat = 0.0;
+                double lon = 0.0;
+                String[] data = coordinates.get(key);
+
+                lat = Double.parseDouble(data[0]);
+                lon = Double.parseDouble(data[1]);
+
+                LatLng place = new LatLng(lat, lon);
+                places.add(place);
+                mMap.addMarker(new MarkerOptions().position(place).title(key));
             }
-            else {
-                lat = Double.parseDouble(data.get(1));
-                lon = Double.parseDouble(data.get(2));
-            }
-            LatLng place = new LatLng(lat, lon);
-            places.add(place);
-            mMap.addMarker(new MarkerOptions().position(place).title(key));
         }
 
         if (places.size() > 0) {

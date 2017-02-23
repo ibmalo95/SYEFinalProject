@@ -13,6 +13,8 @@ import android.widget.Button;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.os.Handler;
 
 public class MainActivity extends Activity {
@@ -27,8 +29,6 @@ public class MainActivity extends Activity {
     Button map = null;
     Button home = null;
     private MainFragment mainFragment;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +59,17 @@ public class MainActivity extends Activity {
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                intent.putExtra("DATAMAP", mainFragment.collegeData);
-                startActivity(intent);
+                // SQLite
+                AccessDB accessDB = new AccessDB(ID, null, MainActivity.this, mainFragment);
+                accessDB.execute();
             }
         });
+    }
+
+    protected void startMap(HashMap<String, String[]> coordinates) {
+        Intent intent = new Intent(MainActivity.this, MapActivity.class);
+        intent.putExtra("DATA", coordinates);
+        startActivity(intent);
     }
 
     // Result from AddActivity or HomeActivity
@@ -92,6 +98,4 @@ public class MainActivity extends Activity {
             getUniversityDataTask.execute(url);
         }
     }
-
-
 }

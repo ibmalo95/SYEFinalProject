@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Ina on 2/5/17.
@@ -16,17 +17,16 @@ public class DBQueries {
     private static final String LOG_TAG = DBQueries.class.getName();
 
     public static ArrayList<String> getRow(SQLiteDatabase db, String id) {
-        // Specifies which columns from the database that will be used after query
+
         // Tapping a listview item
-        String[] projection = {
+        String[] projection = new String[]{
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_URL,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR
         };
-
         // WHERE "id" = id
         String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + " = ?";
-        String[] selectionArgs = {id};
+        String[] selectionArgs = new String[]{id};
 
         Cursor cursor = db.query(
                 UniversityDataContract.UniversityEntry.TABLE_NAME,
@@ -47,6 +47,39 @@ public class DBQueries {
                 items.add(value);
             }
         }
+        return items;
+    }
+
+    public static HashMap<String, String[]> getLocations(SQLiteDatabase db) {
+        String [] projection = {
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_LON
+        };
+
+        Cursor cursor = db.query(
+                UniversityDataContract.UniversityEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        // return the data from query
+        HashMap<String, String[]> items = new HashMap();
+
+        while (cursor.moveToNext()) {
+
+            String key = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME));
+            String[] coordinates = {
+                    cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON))
+            };
+            items.put(key, coordinates);
+        }
+
         return items;
     }
 

@@ -120,6 +120,5 @@ public class AddActivity extends Activity {
             add_college.setVisibility(View.VISIBLE);
         }
         add_college.setVisibility(View.VISIBLE);
-
     }
 }

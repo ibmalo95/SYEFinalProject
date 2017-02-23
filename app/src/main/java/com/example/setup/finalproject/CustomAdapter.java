@@ -2,6 +2,8 @@ package com.example.setup.finalproject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +25,19 @@ import java.util.List;
 public class CustomAdapter extends ArrayAdapter<String>{
 
     private static final String LOG_TAG = CustomAdapter.class.getName();
+    private static final String ID = "LIST";
 
     protected List<String> colleges = null;
     protected MainFragment fragment = null;
+    private Handler h = null;
+    private ArrayList<String> items = new ArrayList();
 
     public CustomAdapter(Context ctx, int resource, List<String> colleges, MainFragment fragment) {
         super(ctx, resource, colleges);
 
         this.colleges = colleges;
         this.fragment = fragment;
+        h = new Handler();
     }
 
     @Override
@@ -73,8 +79,13 @@ public class CustomAdapter extends ArrayAdapter<String>{
                 //fragment.collegeData.remove(listItemText.getText().toString());
 
                 // SQLITE
-                String id = "" + position;
-                DBQueries.deleteRow(fragment.db, id);
+                h.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String id = "" + position;
+                        DBQueries.deleteRow(fragment.db, id);
+                    }
+                });
             }
         });
 
@@ -83,7 +94,6 @@ public class CustomAdapter extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
 
-
                 // HASHMAP
 //                String name = listItemText.getText().toString();
 //                ArrayList<String> data = fragment.collegeData.get(name);
@@ -91,14 +101,8 @@ public class CustomAdapter extends ArrayAdapter<String>{
 //                String address = data.get(3);
 
                 // SQLITE
-                String id = "" + position;
-                ArrayList<String> items = DBQueries.getRow(fragment.db, id);
-
-                // can't cast string[] because its an object[]
-
-                Intent intent = new Intent(fragment.getActivity(), ListItemActivity.class);
-                intent.putExtra("INFO", items);
-                fragment.startActivity(intent);
+                AccessDB accessDB = new AccessDB(ID, "" + position, fragment);
+                accessDB.execute();
             }
         });
 

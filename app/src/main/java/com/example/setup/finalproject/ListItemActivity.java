@@ -6,6 +6,8 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /*
  * The college view; where the individual college info can be seen
  */
@@ -25,10 +27,10 @@ public class ListItemActivity extends Activity {
         setContentView(R.layout.activity_list_item);
 
         collegeName = (TextView) findViewById(R.id.name);
-        String[] info = getIntent().getStringArrayExtra("INFO");
-        collegeName.setText(info[0]);
-        url = "http://" + info[1];
-        addressText = info[2];
+        ArrayList<String> data = (ArrayList<String>) getIntent().getSerializableExtra("INFO");
+        collegeName.setText(data.get(0));
+        url = "http://" + data.get(1);
+        addressText = data.get(2);
         address = (TextView) findViewById(R.id.address);
         address.setText(addressText);
 

@@ -27,6 +27,7 @@ import java.util.List;
 /**
  * TODO: Requires change from hashmap to SQLite
  * A simple {@link Fragment} subclass.
+ * Deals with adding to the listview and storing data into the table
  */
 public class MainFragment extends Fragment {
 
@@ -40,7 +41,6 @@ public class MainFragment extends Fragment {
     // SQLite instance data
     private DBHelper dbHelper = null;
     protected SQLiteDatabase db = null;
-    //private Handler handler = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,12 @@ public class MainFragment extends Fragment {
         collegeData.put("HOME", homeLatLon);
     }
 
+    protected void startList(ArrayList<String> data) {
+        Intent intent = new Intent(this.getActivity(), ListItemActivity.class);
+        intent.putExtra("INFO", data);
+        startActivity(intent);
+    }
+
     // TODO: Rework above 2 methods to use SQLite
 
 
@@ -121,23 +127,11 @@ public class MainFragment extends Fragment {
             return db;
         }
 
-
         @Override
         protected void onPostExecute(SQLiteDatabase db) {
             super.onPostExecute(db);
-
-
             // set db to this database
             MainFragment.this.db = db;
-//            handler.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    // queries
-//                    // Does this need to happen here?
-//                    // When we are initially adding a college we just need to add a row to the database
-//                    // Need to query when a listview item is tapped (in CursorAdapter) or in map activity
-//                }
-//            });
         }
     }
 
