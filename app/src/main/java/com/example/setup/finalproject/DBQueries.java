@@ -92,10 +92,6 @@ public class DBQueries {
         catch (Exception e) {
             Log.e(LOG_TAG, e.toString());
         }
-        finally {
-            db.close();
-        }
-
     }
 
 }

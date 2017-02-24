@@ -75,9 +75,6 @@ public class CustomAdapter extends ArrayAdapter<String>{
                 colleges.remove(i);
                 notifyDataSetChanged();
 
-                // HASHMAP
-                //fragment.collegeData.remove(listItemText.getText().toString());
-
                 // SQLITE
                 h.post(new Runnable() {
                     @Override
@@ -93,13 +90,6 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
             @Override
             public void onClick(View v) {
-
-                // HASHMAP
-//                String name = listItemText.getText().toString();
-//                ArrayList<String> data = fragment.collegeData.get(name);
-//                String url = data.get(0);
-//                String address = data.get(3);
-
                 // SQLITE
                 AccessDB accessDB = new AccessDB(ID, "" + position, fragment);
                 accessDB.execute();

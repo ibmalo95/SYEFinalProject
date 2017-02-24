@@ -41,7 +41,6 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
         else {
             coordinates = DBQueries.getLocations(fragment.db); // returns the locations
         }
-
         return null;
     }
 
@@ -55,7 +54,5 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
         else {
             act.startMap(coordinates);
         }
-
     }
-
 }

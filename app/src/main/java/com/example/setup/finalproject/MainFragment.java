@@ -36,7 +36,6 @@ public class MainFragment extends Fragment {
     ListView list = null;
     ArrayAdapter<String> collegesAdapter;
     List<String> colleges; // TODO: Saving... go through SQLite table and store college names
-    HashMap<String, ArrayList<String>> collegeData = new HashMap();
 
     // SQLite instance data
     private DBHelper dbHelper = null;
@@ -67,13 +66,7 @@ public class MainFragment extends Fragment {
         String key = college_data.get(0);
         colleges.add(key);
 
-        // Store with HashMap
-//        college_data.remove(key);
-//        collegeData.put(key, college_data);
-
-
         // Store with SQLite
-        //handler = new Handler();
         dbHelper = new DBHelper(getContext());
         String id = "" + colleges.indexOf(key);
         new CreateDB(college_data, id).execute();
@@ -82,7 +75,7 @@ public class MainFragment extends Fragment {
     protected void addHome(ArrayList<String> homeLatLon) {
 
         // TODO: Store with preferences or in table?
-        collegeData.put("HOME", homeLatLon);
+
     }
 
     protected void startList(ArrayList<String> data) {
