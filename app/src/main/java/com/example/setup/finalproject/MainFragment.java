@@ -81,12 +81,19 @@ public class MainFragment extends Fragment {
     // add college to the ListView
     protected void addCollege(ArrayList<String> college_data) {
 
+        String id = "";
         String key = college_data.get(0);
-        colleges.add(key);
+        if (colleges.contains(key)) {
+            colleges.add(key + " " + college_data.get(4));
+            id = key + " " + college_data.get(4);
+        }
+        else {
+            colleges.add(key);
+            id = key;
+        }
 
         // Store with SQLite
         dbHelper = new DBHelper(getContext());
-        String id = "" + colleges.indexOf(key);
         new CreateDB(college_data, id).execute();
     }
 
@@ -121,7 +128,7 @@ public class MainFragment extends Fragment {
 
             if (data != null) {
                 // Insert data into the database
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id); // make the id be the index of where it is in colleges list
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id); // ID college name or college name plus address
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME, data.get(0)); // name
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_URL, data.get(1)); // URL
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat

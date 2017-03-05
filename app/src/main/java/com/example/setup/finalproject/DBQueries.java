@@ -52,7 +52,7 @@ public class DBQueries {
 
     public static HashMap<String, String[]> getLocations(SQLiteDatabase db) {
         String [] projection = {
-                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_ID,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_LON
         };
@@ -72,7 +72,7 @@ public class DBQueries {
 
         while (cursor.moveToNext()) {
 
-            String key = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME));
+            String key = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID));
             String[] coordinates = {
                     cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT)),
                     cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON))
@@ -85,7 +85,7 @@ public class DBQueries {
 
     public static ArrayList<String> getNames(SQLiteDatabase db) {
         String [] projection = {
-                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_ID
         };
 
         Cursor cursor = db.query(
@@ -101,7 +101,7 @@ public class DBQueries {
         ArrayList<String> items = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID));
             items.add(name);
         }
         return items;

@@ -72,6 +72,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
             int i = position;
             @Override
             public void onClick(View v) {
+                final String remove = colleges.get(position);
                 colleges.remove(i);
                 notifyDataSetChanged();
 
@@ -79,8 +80,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
                 h.post(new Runnable() {
                     @Override
                     public void run() {
-                        String id = "" + position;
-                        DBQueries.deleteRow(fragment.db, id);
+                        DBQueries.deleteRow(fragment.db, remove);
                     }
                 });
             }
@@ -91,7 +91,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
                 // SQLITE
-                AccessDB accessDB = new AccessDB(ID, "" + position, fragment);
+                AccessDB accessDB = new AccessDB(ID, colleges.get(position), fragment);
                 accessDB.execute();
             }
         });

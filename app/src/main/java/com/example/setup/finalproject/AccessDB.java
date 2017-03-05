@@ -36,7 +36,6 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
 
         // TODO: Probably want to check that db isn't null
         if (id.equals("NAMES")) {
-
             data = DBQueries.getNames(fragment.db);
         }
         else if (id.equals("LIST")) {

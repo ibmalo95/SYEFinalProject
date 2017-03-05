@@ -39,6 +39,5 @@ public class ListItemActivity extends Activity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
-
     }
 }
