@@ -5,22 +5,15 @@ import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -32,6 +25,7 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     public static final String LOG_TAG = MainFragment.class.getName();
+    public static final String ID = "NAMES";
 
     ListView list = null;
     ArrayAdapter<String> collegesAdapter;
@@ -39,6 +33,7 @@ public class MainFragment extends Fragment {
 
     // SQLite instance data
     private DBHelper dbHelper = null;
+    private View root;
     protected SQLiteDatabase db = null;
 
     @Override
@@ -53,11 +48,34 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        root = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // input college names from SQLite table into colleges list
+        // need to open the database again
+        if (db == null) {
+            dbHelper = new DBHelper(getContext());
+            new CreateDB(null, null).execute();
+        }
+        else {
+            list = (ListView) root.findViewById(R.id.college_list);
+            list.setAdapter(collegesAdapter);
+            list.setClickable(true);
+        }
+
+        return root;
+    }
+
+    protected void getNames() {
+        new AccessDB(ID, null, this).execute();
+    }
+
+    protected void populateColleges(ArrayList<String> names) {
+        for (int i = 0; i < names.size(); i++) {
+            colleges.add(names.get(i));
+        }
         list = (ListView) root.findViewById(R.id.college_list);
         list.setAdapter(collegesAdapter);
         list.setClickable(true);
-        return root;
     }
 
     // add college to the ListView
@@ -70,12 +88,6 @@ public class MainFragment extends Fragment {
         dbHelper = new DBHelper(getContext());
         String id = "" + colleges.indexOf(key);
         new CreateDB(college_data, id).execute();
-    }
-
-    protected void addHome(ArrayList<String> homeLatLon) {
-
-        // TODO: Store with preferences or in table?
-
     }
 
     protected void startList(ArrayList<String> data) {
@@ -107,15 +119,17 @@ public class MainFragment extends Fragment {
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            // Insert data into the database
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id); // make the id be the index of where it is in colleges list
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME, data.get(0)); // name
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_URL, data.get(1)); // URL
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON, data.get(3)); // Long
-            values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR, data.get(4)); // Address
+            if (data != null) {
+                // Insert data into the database
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID, id); // make the id be the index of where it is in colleges list
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME, data.get(0)); // name
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_URL, data.get(1)); // URL
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON, data.get(3)); // Long
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR, data.get(4)); // Address
 
-            long rowID = db.insert(UniversityDataContract.UniversityEntry.TABLE_NAME, null, values);
+                long rowID = db.insert(UniversityDataContract.UniversityEntry.TABLE_NAME, null, values);
+            }
 
             return db;
         }
@@ -125,6 +139,9 @@ public class MainFragment extends Fragment {
             super.onPostExecute(db);
             // set db to this database
             MainFragment.this.db = db;
+            if (data == null) {
+                getNames();
+            }
         }
     }
 

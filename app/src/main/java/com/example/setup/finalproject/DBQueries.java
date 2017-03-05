@@ -83,6 +83,30 @@ public class DBQueries {
         return items;
     }
 
+    public static ArrayList<String> getNames(SQLiteDatabase db) {
+        String [] projection = {
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME
+        };
+
+        Cursor cursor = db.query(
+                UniversityDataContract.UniversityEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        ArrayList<String> items = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME));
+            items.add(name);
+        }
+        return items;
+    }
+
     public static void deleteRow(SQLiteDatabase db, String id) {
         try {
             String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + " = ?";

@@ -35,7 +35,11 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
 
         // TODO: Probably want to check that db isn't null
-        if (id.equals("LIST")) {
+        if (id.equals("NAMES")) {
+
+            data = DBQueries.getNames(fragment.db);
+        }
+        else if (id.equals("LIST")) {
             data = DBQueries.getRow(fragment.db, row); // returns the colleges info
         }
         else {
@@ -48,7 +52,10 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String string) {
         super.onPostExecute(string);
 
-        if (id.equals("LIST")) {
+        if (id.equals("NAMES")) {
+            fragment.populateColleges(data);
+        }
+        else if (id.equals("LIST")) {
             fragment.startList(data);
         }
         else {

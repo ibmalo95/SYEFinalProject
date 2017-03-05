@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,6 +29,7 @@ public class MainActivity extends Activity {
     Button add = null;
     Button map = null;
     Button home = null;
+    ArrayList<String> locations = new ArrayList(); // TODO: Save
     private MainFragment mainFragment;
 
     @Override
@@ -67,9 +69,17 @@ public class MainActivity extends Activity {
     }
 
     protected void startMap(HashMap<String, String[]> coordinates) {
+        if (locations.size() > 0) {
+            String[] home = {locations.get(0), locations.get(1)};
+            coordinates.put("HOME", home);
+        }
         Intent intent = new Intent(MainActivity.this, MapActivity.class);
         intent.putExtra("DATA", coordinates);
         startActivity(intent);
+    }
+
+    protected void addHome(ArrayList<String> homeLatLon) {
+        locations = homeLatLon;
     }
 
     // Result from AddActivity or HomeActivity
@@ -94,7 +104,7 @@ public class MainActivity extends Activity {
                     appendQueryParameter("api_key", API_KEY);
 
             String url = builder.build().toString();
-            GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(mainFragment, ID);
+            GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(MainActivity.this, ID);
             getUniversityDataTask.execute(url);
         }
     }

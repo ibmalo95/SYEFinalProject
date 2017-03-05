@@ -26,13 +26,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
     private static final String LOG_TAG = GetUniversityDataTask.class.getName();
-    private MainFragment ctx;
+    private MainActivity ctx;
     private AddActivity act;
     private String id;
     private String[] entries;
     private JSONArray results;
 
-    public GetUniversityDataTask(MainFragment ctx, String id) {
+    public GetUniversityDataTask(MainActivity ctx, String id) {
         this.ctx = ctx;
         this.id = id;
     }
@@ -120,7 +120,6 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
     // parse the JSON returned from Google Geocoding api
     protected ArrayList<String> getGeometryArrayFromJSON(String JSON) throws JSONException {
-        ArrayList<String> latlon = new ArrayList();
         JSONObject homeInfo = null;
         homeInfo = new JSONObject(JSON);
         JSONArray results = homeInfo.getJSONArray("results");
@@ -128,6 +127,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         JSONObject geometry = object.getJSONObject("geometry");
         JSONObject location = geometry.getJSONObject("location");
 
+        ArrayList<String> latlon = new ArrayList();
         latlon.add(location.getString("lat"));
         latlon.add(location.getString("lng"));
 
