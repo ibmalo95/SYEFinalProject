@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,12 +79,12 @@ public class AddActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // Get the college that the user selected, store the corresponding data and return to mainactivity
+                // TODO: Clicking add when there is nothing to add should not do anything
 
 
                 int index = spinner.getSelectedItemPosition();
                 try {
                     JSONObject data = list.getJSONObject(index);
-
                     // Store the data
                     String key = data.getString("school.name"); // name
                     ArrayList<String> dataInfo = new ArrayList();
@@ -109,7 +110,8 @@ public class AddActivity extends Activity {
 
     protected void setEntries(String[] entries, JSONArray array) {
         if (array.length() == 0) {
-            // Manually enter data
+            // TODO: Manually enter data maybe?
+            Toast.makeText(add, "No college found.", Toast.LENGTH_SHORT).show();
         }
         else {
             list = array;
@@ -119,6 +121,5 @@ public class AddActivity extends Activity {
             spinner.setVisibility(View.VISIBLE);
             add_college.setVisibility(View.VISIBLE);
         }
-        add_college.setVisibility(View.VISIBLE);
     }
 }
