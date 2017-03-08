@@ -1,18 +1,13 @@
 package com.example.setup.finalproject;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,6 +24,7 @@ public class MainActivity extends Activity {
     Button add = null;
     Button map = null;
     Button home = null;
+
     ArrayList<String> locations = new ArrayList(); // TODO: Save
     private MainFragment mainFragment;
 
@@ -66,6 +62,26 @@ public class MainActivity extends Activity {
                 accessDB.execute();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String lat = getPreferences(MODE_PRIVATE).getString("lat", null);
+        String lon = getPreferences(MODE_PRIVATE).getString("lon", null);
+        if (lat != null && lon != null) {
+            locations.add(lat);
+            locations.add(lon);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!locations.isEmpty()) {
+            getPreferences(MODE_PRIVATE).edit().putString("lat", locations.get(0)).apply();
+            getPreferences(MODE_PRIVATE).edit().putString("lon", locations.get(1)).apply();
+        }
     }
 
     protected void startMap(HashMap<String, String[]> coordinates) {
