@@ -109,7 +109,10 @@ public class AddActivity extends Activity {
     }
 
     protected void setEntries(String[] entries, JSONArray array) {
-        if (array.length() == 0) {
+        if (array == null) {
+            Toast.makeText(add, "No network connection", Toast.LENGTH_SHORT).show();
+        }
+        else if (array.length() == 0) {
             // TODO: Manually enter data maybe?
             Toast.makeText(add, "No college found.", Toast.LENGTH_SHORT).show();
         }
