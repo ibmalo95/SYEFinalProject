@@ -79,7 +79,7 @@
     android:id="@+id/add_college"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/add_button"
+    android:text="@string/add_menu"
     android:textSize="40sp"
     android:layout_marginLeft="@dimen/button_margin"
     android:layout_below="@+id/spinner"

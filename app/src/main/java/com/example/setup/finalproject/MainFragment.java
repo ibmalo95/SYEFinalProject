@@ -29,7 +29,7 @@ public class MainFragment extends Fragment {
 
     ListView list = null;
     ArrayAdapter<String> collegesAdapter;
-    List<String> colleges; // TODO: Saving... go through SQLite table and store college names
+    List<String> colleges;
 
     // SQLite instance data
     private DBHelper dbHelper = null;

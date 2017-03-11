@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,9 +24,6 @@ public class MainActivity extends Activity {
     public static final String ID = "HOME";
     public static final String API_KEY = "AIzaSyC5oGSPPmvHwrZO1CsAnxyd_pVIky8F2pE";
 
-    Button add = null;
-    Button map = null;
-    Button home = null;
 
     ArrayList<String> locations = new ArrayList(); // TODO: Save
     private MainFragment mainFragment;
@@ -32,36 +32,35 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
         mainFragment = (MainFragment) getFragmentManager().findFragmentById(R.id.main_fragment);
+        return true;
+    }
 
-        add = (Button) findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivityForResult(intent, ADD_REQUEST);
-            }
-        });
-
-        home = (Button) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivityForResult(intent, HOME_REQUEST);
-            }
-        });
-
-        map  = (Button) findViewById(R.id.map);
-        map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add:
+                Intent intent_add = new Intent(MainActivity.this, AddActivity.class);
+                startActivityForResult(intent_add, ADD_REQUEST);
+                return true;
+            case R.id.home:
+                Intent intent_home = new Intent(MainActivity.this, HomeActivity.class);
+                startActivityForResult(intent_home, HOME_REQUEST);
+                return true;
+            case R.id.map:
                 // SQLite
                 AccessDB accessDB = new AccessDB(ID, null, MainActivity.this, mainFragment);
                 accessDB.execute();
-            }
-        });
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override

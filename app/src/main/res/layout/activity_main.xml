@@ -18,23 +18,4 @@
         class="com.example.setup.finalproject.MainFragment">
     </fragment>
 
-    <Button
-        android:id="@+id/map"
-        style="@style/list_view_buttons"
-        android:text="@string/map_button"
-        android:layout_marginLeft="@dimen/button_margin"/>
-
-    <Button
-        android:id="@+id/home"
-        style="@style/list_view_buttons"
-        android:text="@string/home"
-        android:layout_centerHorizontal="true"/>
-
-    <Button
-        android:id="@+id/add"
-        style="@style/list_view_buttons"
-        android:text="@string/add_button"
-        android:layout_alignRight="@+id/main_fragment"
-        android:layout_marginRight="@dimen/button_margin"/>
-
 </RelativeLayout>
