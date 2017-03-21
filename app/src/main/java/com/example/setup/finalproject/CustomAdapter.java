@@ -91,7 +91,9 @@ public class CustomAdapter extends ArrayAdapter<String>{
             @Override
             public void onClick(View v) {
                 // SQLITE
-                AccessDB accessDB = new AccessDB(ID, colleges.get(position), fragment);
+                ArrayList<String> location = new ArrayList();
+                location.add(colleges.get(position));
+                AccessDB accessDB = new AccessDB(ID, location, fragment);
                 accessDB.execute();
             }
         });

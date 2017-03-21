@@ -11,35 +11,37 @@ import java.util.HashMap;
 
 public class AccessDB extends AsyncTask<Void, Void, String> {
     private String id;
-    private String row;
     private MainFragment fragment;
     private MainActivity act;
     private ArrayList<String> data;
+    private ArrayList<String[]> contains;
+    private ArrayList<String> college_data;
     private HashMap<String, String[]> coordinates;
 
 
-    public AccessDB(String id, String row, MainFragment fragment) {
+    public AccessDB(String id, ArrayList<String> college_data, MainFragment fragment) {
         this.fragment = fragment;
         this.id = id;
-        this.row = row;
+        this.college_data = college_data;
     }
 
-    public AccessDB(String id, String row, MainActivity act, MainFragment fragment) {
+    public AccessDB(String id, MainActivity act, MainFragment fragment) {
         this.act = act;
         this.fragment = fragment;
         this.id = id;
-        this.row = row;
     }
 
     @Override
     protected String doInBackground(Void... params) {
 
-        // TODO: Probably want to check that db isn't null
         if (id.equals("NAMES")) {
             data = DBQueries.getNames(fragment.db);
         }
         else if (id.equals("LIST")) {
-            data = DBQueries.getRow(fragment.db, row); // returns the colleges info
+            data = DBQueries.getRow(fragment.db, college_data.get(0)); // returns the colleges info
+        }
+        else if (id.equals("CONTAINS")) {
+            contains = DBQueries.contains(fragment.db, college_data.get(0));
         }
         else {
             coordinates = DBQueries.getLocations(fragment.db); // returns the locations
@@ -56,6 +58,9 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
         }
         else if (id.equals("LIST")) {
             fragment.startList(data);
+        }
+        else if (id.equals("CONTAINS")) {
+            fragment.contains(contains, college_data);
         }
         else {
             act.startMap(coordinates);

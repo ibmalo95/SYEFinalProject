@@ -26,6 +26,7 @@ public class MainFragment extends Fragment {
 
     public static final String LOG_TAG = MainFragment.class.getName();
     public static final String ID = "NAMES";
+    public static final String CONTAINS = "CONTAINS";
 
     ListView list = null;
     ArrayAdapter<String> collegesAdapter;
@@ -66,7 +67,7 @@ public class MainFragment extends Fragment {
     }
 
     protected void getNames() {
-        new AccessDB(ID, null, this).execute();
+        new AccessDB(ID, new ArrayList<String>(), this).execute();
     }
 
     protected void populateColleges(ArrayList<String> names) {
@@ -77,24 +78,41 @@ public class MainFragment extends Fragment {
         list.setAdapter(collegesAdapter);
         list.setClickable(true);
     }
+    protected void contains(ArrayList<String[]> data, ArrayList<String> college_data) {
+        String name = college_data.get(0);
+        String addr = college_data.get(4);
+        int duplicate = 0;
+        if (!data.isEmpty()) {
+            for (int i = 0; i < data.size(); i++) {
+                String rName = data.get(i)[0];
+                String rAddr = data.get(i)[1];
+                if (rName.equals(name) && rAddr.equals(addr)) {
+                    // College already in the list so don't add
+                    break;
+                } else if (rName.equals(name) && !rAddr.equals(addr)) {
+                    duplicate++;
+                }
+            }
+        }
+        else if (duplicate > 0) {
+            colleges.add(name + ": " + addr);
+            String id = name + ": " + addr;
+            // Store with SQLite
+            dbHelper = new DBHelper(getContext());
+            new CreateDB(college_data, id).execute();
+        }
+        else {
+            colleges.add(name);
+            String id = name;
+            dbHelper = new DBHelper(getContext());
+            new CreateDB(college_data, id).execute();
+        }
+    }
 
     // add college to the ListView
     protected void addCollege(ArrayList<String> college_data) {
-
-        String id = "";
-        String key = college_data.get(0);
-        if (colleges.contains(key)) {
-            colleges.add(key + " " + college_data.get(4));
-            id = key + " " + college_data.get(4);
-        }
-        else {
-            colleges.add(key);
-            id = key;
-        }
-
-        // Store with SQLite
-        dbHelper = new DBHelper(getContext());
-        new CreateDB(college_data, id).execute();
+        // TODO: Check two cases: 1. Name and Address are in the database. 2. If just the name is in the database
+        new AccessDB(CONTAINS, college_data, this).execute();
     }
 
     protected void startList(ArrayList<String> data) {

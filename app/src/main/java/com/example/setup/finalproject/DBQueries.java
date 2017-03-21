@@ -107,6 +107,41 @@ public class DBQueries {
         return items;
     }
 
+    public static ArrayList<String[]> contains(SQLiteDatabase db, String name) {
+        String [] projection = {
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR
+        };
+
+        // WHERE "id" = id
+        String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME + " = ?";
+        String[] selectionArgs = new String[]{name};
+
+        Cursor cursor = db.query(
+                UniversityDataContract.UniversityEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // return the data from query
+        ArrayList<String[]> items = new ArrayList();
+        while (cursor.moveToNext()) {
+            String[] data = {null, null};
+            int count = 0;
+            for (String col: projection) {
+                String value = cursor.getString(cursor.getColumnIndexOrThrow(col));
+                data[count] = value;
+                count++;
+            }
+            items.add(data);
+        }
+        return items;
+    }
+
     public static void deleteRow(SQLiteDatabase db, String id) {
         try {
             String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + " = ?";

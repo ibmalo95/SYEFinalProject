@@ -7,14 +7,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.os.Handler;
+
 
 public class MainActivity extends Activity {
 
@@ -55,7 +52,7 @@ public class MainActivity extends Activity {
                 return true;
             case R.id.map:
                 // SQLite
-                AccessDB accessDB = new AccessDB(ID, null, MainActivity.this, mainFragment);
+                AccessDB accessDB = new AccessDB(ID, MainActivity.this, mainFragment);
                 accessDB.execute();
                 return true;
             default:
