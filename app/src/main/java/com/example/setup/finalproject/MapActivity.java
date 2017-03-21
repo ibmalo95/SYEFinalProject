@@ -1,6 +1,10 @@
 package com.example.setup.finalproject;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -67,7 +72,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 LatLng place = new LatLng(lat, lon);
                 places.add(place);
-                mMap.addMarker(new MarkerOptions().position(place).title(key));
+                if (key.equals("HOME")) {
+
+                    mMap.addMarker(new MarkerOptions().position(place).title(key)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                }
+                else {
+                    mMap.addMarker(new MarkerOptions().position(place).title(key));
+                }
+
             }
         }
 

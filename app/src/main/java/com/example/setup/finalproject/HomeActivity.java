@@ -14,9 +14,7 @@ import android.widget.Spinner;
  */
 public class HomeActivity extends Activity {
 
-
     public static final String HOME = "com.example.setup.HomeActivity.HOME";
-    String home_address = null;
     EditText city = null;
     Spinner state = null;
     Button set = null;
@@ -68,6 +66,5 @@ public class HomeActivity extends Activity {
         String state_name = state.getSelectedItem().toString();
         getPreferences(MODE_PRIVATE).edit().putString("city", city_name).apply();
         getPreferences(MODE_PRIVATE).edit().putString("state", state_name).apply();
-
     }
 }
