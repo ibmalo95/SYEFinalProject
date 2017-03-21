@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
     public static final String API_KEY = "AIzaSyC5oGSPPmvHwrZO1CsAnxyd_pVIky8F2pE";
 
 
-    ArrayList<String> locations = new ArrayList(); // TODO: Save
+    ArrayList<String> locations = new ArrayList();
     private MainFragment mainFragment;
 
     @Override

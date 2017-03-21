@@ -11,13 +11,6 @@
     android:orientation="vertical"
     tools:context="com.example.setup.finalproject.AddActivity">
 
-    <EditText
-        android:id="@+id/street"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/street"
-        android:textSize="60sp"
-        android:layout_marginLeft="@dimen/college_name_margin"/>
 
     <EditText
         android:id="@+id/city"
