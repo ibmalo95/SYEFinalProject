@@ -16,12 +16,10 @@ import java.util.List;
 
 
 /**
- * TODO: Requires change from hashmap to SQLite
  * Created by Ina on 1/9/17.
  * Custom Adapter used to populate the list view
  */
 
-// TODO: when sql is implemented will be able to access data directly from here (not dependent on fragment)
 public class CustomAdapter extends ArrayAdapter<String>{
 
     private static final String LOG_TAG = CustomAdapter.class.getName();
@@ -30,7 +28,6 @@ public class CustomAdapter extends ArrayAdapter<String>{
     protected List<String> colleges = null;
     protected MainFragment fragment = null;
     private Handler h = null;
-    private ArrayList<String> items = new ArrayList();
 
     public CustomAdapter(Context ctx, int resource, List<String> colleges, MainFragment fragment) {
         super(ctx, resource, colleges);
@@ -68,6 +65,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
         listItemText.setText(colleges.get(position));
         ImageButton delete = (ImageButton)view.findViewById(R.id.delete);
 
+        // Remove school from listview and database
         delete.setOnClickListener(new View.OnClickListener(){
             int i = position;
             @Override
@@ -75,8 +73,6 @@ public class CustomAdapter extends ArrayAdapter<String>{
                 final String remove = colleges.get(position);
                 colleges.remove(i);
                 notifyDataSetChanged();
-
-                // SQLITE
                 h.post(new Runnable() {
                     @Override
                     public void run() {
@@ -86,6 +82,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
             }
         });
 
+        // Access individual colleges information
         listItemText.setOnClickListener(new View.OnClickListener() {
 
             @Override

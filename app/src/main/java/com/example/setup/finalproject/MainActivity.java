@@ -11,8 +11,6 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-
 public class MainActivity extends Activity {
 
     public static final int ADD_REQUEST = 1;

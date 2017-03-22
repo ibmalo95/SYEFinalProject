@@ -32,11 +32,13 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
     private String[] entries;
     private JSONArray results;
 
+    // Constructor for accessing home lat and long
     public GetUniversityDataTask(MainActivity ctx, String id) {
         this.ctx = ctx;
         this.id = id;
     }
 
+    // Constructor for searching the USED colleges/universities database
     public GetUniversityDataTask(AddActivity act, String id) {
         this.act = act;
         this.id = id;
@@ -92,7 +94,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
     @Override
     protected void onPostExecute(String[] strings) {
         super.onPostExecute(strings);
-
+        // set the spinner object in the AddActivity
         if (id.equals("COLLEGE")) {
             act.setEntries(entries, results);
         }

@@ -1,5 +1,6 @@
 package com.example.setup.finalproject;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
@@ -18,13 +19,14 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
     private ArrayList<String> college_data;
     private HashMap<String, String[]> coordinates;
 
-
+    // Constructor used for accessing a listview items
     public AccessDB(String id, ArrayList<String> college_data, MainFragment fragment) {
         this.fragment = fragment;
         this.id = id;
         this.college_data = college_data;
     }
 
+    // Constructor used for retrieving locations for map
     public AccessDB(String id, MainActivity act, MainFragment fragment) {
         this.act = act;
         this.fragment = fragment;
@@ -35,16 +37,20 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
 
         if (id.equals("NAMES")) {
+            // get names to populate listview
             data = DBQueries.getNames(fragment.db);
         }
         else if (id.equals("LIST")) {
-            data = DBQueries.getRow(fragment.db, college_data.get(0)); // returns the colleges info
+            // returns a colleges info
+            data = DBQueries.getRow(fragment.db, college_data.get(0));
         }
         else if (id.equals("CONTAINS")) {
+            // return rows that contain the given name
             contains = DBQueries.contains(fragment.db, college_data.get(0));
         }
         else {
-            coordinates = DBQueries.getLocations(fragment.db); // returns the locations
+            // returns locations
+            coordinates = DBQueries.getLocations(fragment.db);
         }
         return null;
     }

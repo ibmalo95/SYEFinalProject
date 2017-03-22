@@ -1,16 +1,18 @@
 package com.example.setup.finalproject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,7 +29,10 @@ public class AddActivity extends Activity {
 
     public static final String ADD = "com.example.setup.AddActivity.ADD";
     public static final String API_KEY = "zTvIDBIb2oguISKw9f0NSMLesMx3TLM4Q8m5MCAk";
-    public static final String FIELDS = "id,school.name,school.city,school.state,location.lat,location.lon,school.school_url";
+    public static final String FIELDS = "id,school.name,school.city,school.state,location.lat,location.lon,school.school_url," +
+            "2014.admissions.admission_rate.overall,2014.student.size,2014.cost.tuition.in_state,2014.cost.tuition.out_of_state," +
+            "2014.completion.completion_rate_4yr_150nt,2014.student.retention_rate.four_year.full_time,2014.aid.median_debt.completers.overall";
+
     public static final String ID = "COLLEGE";
 
     EditText college_name = null;
@@ -47,6 +52,8 @@ public class AddActivity extends Activity {
         search_college.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Search for school using name given by user
                 college_name = (EditText) findViewById(R.id.college_name);
                 String name = college_name.getText().toString();
                 if (!name.isEmpty()) {
@@ -62,14 +69,13 @@ public class AddActivity extends Activity {
                             appendQueryParameter("fields", FIELDS).
                             appendQueryParameter("api_key", API_KEY);
 
-
                     String url = builder.build().toString();
 
                     GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(add, ID);
                     getUniversityDataTask.execute(url);
                 }
                 else {
-                    // TODO: Report to user that they need to enter a college
+                    Toast.makeText(add, "Enter a school", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -78,10 +84,8 @@ public class AddActivity extends Activity {
         add_college.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 // Get the college that the user selected, store the corresponding data and return to mainactivity
-                // TODO: Clicking add when there is nothing to add should not do anything
-
-
                 int index = spinner.getSelectedItemPosition();
                 try {
                     JSONObject data = list.getJSONObject(index);
@@ -94,6 +98,13 @@ public class AddActivity extends Activity {
                     dataInfo.add(data.getString("location.lon")); // lng
                     String address = data.getString("school.city") + ", " + data.getString("school.state");
                     dataInfo.add(address); // address
+                    dataInfo.add(data.getString("2014.admissions.admission_rate.overall")); // admission rate
+                    dataInfo.add(data.getString("2014.student.size")); // number of undergraduates enrolled
+                    dataInfo.add(data.getString("2014.cost.tuition.in_state")); // instate tuition
+                    dataInfo.add(data.getString("2014.cost.tuition.out_of_state")); // out of state tuition
+                    dataInfo.add(data.getString("2014.completion.completion_rate_4yr_150nt")); // completion rate
+                    dataInfo.add(data.getString("2014.student.retention_rate.four_year.full_time")); // retention rate
+                    dataInfo.add(data.getString("2014.aid.median_debt.completers.overall")); // median debt upon completion
 
                     // return college name
                     Intent result = new Intent();
@@ -117,6 +128,7 @@ public class AddActivity extends Activity {
             Toast.makeText(add, "No college found.", Toast.LENGTH_SHORT).show();
         }
         else {
+            // set the contents of the spinner to colleges found through search
             list = array;
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, entries);

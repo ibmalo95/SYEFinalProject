@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by ibmalo13 on 11/29/2016.
- * TODO: finish implementing SQLite
  */
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -26,6 +25,13 @@ public class DBHelper extends SQLiteOpenHelper {
                     + UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT + " varchar not null, "
                     + UniversityDataContract.UniversityEntry.COLUMN_NAME_LON + " varchar not null, "
                     + UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_ADM + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_SIZE + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_TIN + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_TOUT + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_COMP + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_RETEN + " varchar not null, "
+                    + UniversityDataContract.UniversityEntry.COLUMN_NAME_DEBT + " varchar not null, "
                     + "PRIMARY KEY (" + UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + "))";
 
     // drop table

@@ -18,5 +18,13 @@ public class UniversityDataContract {
         public static final String COLUMN_NAME_LAT = "latitude";
         public static final String COLUMN_NAME_LON = "longitude";
         public static final String COLUMN_NAME_ADDR = "address";
+        public static final String COLUMN_NAME_ADM = "admission_rate";
+        public static final String COLUMN_NAME_SIZE = "size";
+        public static final String COLUMN_NAME_TIN = "tuition_in_state";
+        public static final String COLUMN_NAME_TOUT = "tuition_out_of_state";
+        public static final String COLUMN_NAME_COMP = "completion_rate";
+        public static final String COLUMN_NAME_RETEN = "retention_rate";
+        public static final String COLUMN_NAME_DEBT = "debt";
+
     }
 }

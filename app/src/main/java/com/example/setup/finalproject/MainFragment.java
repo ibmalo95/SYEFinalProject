@@ -18,7 +18,6 @@ import java.util.List;
 
 
 /**
- * TODO: Requires change from hashmap to SQLite
  * A simple {@link Fragment} subclass.
  * Deals with adding to the listview and storing data into the table
  */
@@ -28,9 +27,9 @@ public class MainFragment extends Fragment {
     public static final String ID = "NAMES";
     public static final String CONTAINS = "CONTAINS";
 
-    ListView list = null;
-    ArrayAdapter<String> collegesAdapter;
-    List<String> colleges;
+    private ListView list = null;
+    private ArrayAdapter<String> collegesAdapter;
+    private List<String> colleges;
 
     // SQLite instance data
     private DBHelper dbHelper = null;
@@ -93,13 +92,13 @@ public class MainFragment extends Fragment {
                     duplicate++;
                 }
             }
-        }
-        else if (duplicate > 0) {
-            colleges.add(name + ": " + addr);
-            String id = name + ": " + addr;
-            // Store with SQLite
-            dbHelper = new DBHelper(getContext());
-            new CreateDB(college_data, id).execute();
+            if (duplicate > 0) {
+                colleges.add(name + ": " + addr);
+                String id = name + ": " + addr;
+                // Store with SQLite
+                dbHelper = new DBHelper(getContext());
+                new CreateDB(college_data, id).execute();
+            }
         }
         else {
             colleges.add(name);
@@ -111,7 +110,6 @@ public class MainFragment extends Fragment {
 
     // add college to the ListView
     protected void addCollege(ArrayList<String> college_data) {
-        // TODO: Check two cases: 1. Name and Address are in the database. 2. If just the name is in the database
         new AccessDB(CONTAINS, college_data, this).execute();
     }
 
@@ -121,12 +119,9 @@ public class MainFragment extends Fragment {
         startActivity(intent);
     }
 
-    // TODO: Rework above 2 methods to use SQLite
-
-
     // ********************************** SQLite ***************************************************
 
-
+    // TODO: add columns to database to accommodate new info
     private class CreateDB extends AsyncTask<Void, Void, SQLiteDatabase> {
 
         ArrayList<String> data = null;
@@ -152,6 +147,13 @@ public class MainFragment extends Fragment {
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON, data.get(3)); // Long
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR, data.get(4)); // Address
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADM, data.get(5));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_SIZE, data.get(6));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_TIN, data.get(7));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_TOUT, data.get(8));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_COMP, data.get(9));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_RETEN, data.get(10));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_DEBT, data.get(11));
 
                 long rowID = db.insert(UniversityDataContract.UniversityEntry.TABLE_NAME, null, values);
             }

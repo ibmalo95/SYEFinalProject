@@ -1,11 +1,6 @@
 package com.example.setup.finalproject;
 
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,18 +12,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-// TODO: Requires change from hashmap to SQLite
 /*
  * displays map and markers
  */
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
 
-    private static final String ID = "MAP";
+    private static final String LIST = "LIST";
     private static final String LOG_TAG = MapActivity.class.getName();
 
     private GoogleMap mMap;
@@ -46,7 +41,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         coordinates = (HashMap<String,String[]>) getIntent().getSerializableExtra("DATA");
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -62,7 +56,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         ArrayList<LatLng> places = new ArrayList();
         if (coordinates != null) {
-            for (String key: coordinates.keySet()) {
+            for (String key : coordinates.keySet()) {
                 double lat = 0.0;
                 double lon = 0.0;
                 String[] data = coordinates.get(key);
@@ -76,26 +70,35 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                     mMap.addMarker(new MarkerOptions().position(place).title(key)
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-                }
-                else {
+
+                } else {
                     mMap.addMarker(new MarkerOptions().position(place).title(key));
                 }
-
             }
         }
 
         if (places.size() > 0) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (LatLng place: places) {
+            for (LatLng place : places) {
                 builder.include(place);
             }
 
             LatLngBounds bounds = builder.build();
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
-        }
-        else {
+        } else {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.0902, 95.7129), 100));
         }
 
+        // TODO: think of a way to make the info window more interesting
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+//                ArrayList<String> location = new ArrayList();
+//                location.add(marker.getTitle());
+//                AccessDB accessDB = new AccessDB(LIST, location, fragment);
+//                accessDB.execute();
+            }
+        });
     }
 }

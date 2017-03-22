@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * TODO: Simplify projection, selection, and selectionargs
  * Created by Ina on 2/5/17.
  */
 
@@ -18,11 +19,19 @@ public class DBQueries {
 
     public static ArrayList<String> getRow(SQLiteDatabase db, String id) {
 
-        // Tapping a listview item
+        // columns to return
         String[] projection = new String[]{
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_URL,
-                UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_ADM,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_SIZE,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_TIN,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_TOUT,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_COMP,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_RETEN,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_DEBT,
+
         };
         // WHERE "id" = id
         String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + " = ?";
@@ -51,6 +60,7 @@ public class DBQueries {
     }
 
     public static HashMap<String, String[]> getLocations(SQLiteDatabase db) {
+        // columns to return
         String [] projection = {
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_ID,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT,
@@ -84,6 +94,7 @@ public class DBQueries {
     }
 
     public static ArrayList<String> getNames(SQLiteDatabase db) {
+        // columns to return
         String [] projection = {
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_ID
         };
@@ -108,6 +119,7 @@ public class DBQueries {
     }
 
     public static ArrayList<String[]> contains(SQLiteDatabase db, String name) {
+        // columns to return
         String [] projection = {
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR
