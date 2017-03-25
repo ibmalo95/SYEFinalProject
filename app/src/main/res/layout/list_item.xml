@@ -14,7 +14,7 @@
         android:id="@+id/list_item_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="35sp"
         android:layout_below="@+id/list_item"
         android:text="Address"/>
 
@@ -22,8 +22,8 @@
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_alignRight="@+id/list_item"
+        android:layout_alignRight="@+id/list_item_address"
+        android:layout_below="@+id/list_item"
         android:src="@drawable/ic_close_black_24dp" />
 
 </RelativeLayout>

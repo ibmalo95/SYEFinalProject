@@ -33,70 +33,28 @@
         android:textSize="30sp"
         android:text="OVERVIEW:"/>
 
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:rowCount="4"
-        android:columnCount="2">
-
-        <TextView
-            android:id="@+id/admission"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:text="Admission Rate: "
-            android:gravity="left"
-            />
+        android:layout_marginBottom="15dp">
 
         <TextView
             android:id="@+id/size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="0"
-            android:layout_column="0"
+            android:layout_marginRight="20dp"
             android:text="Size (Undergrad): "
-            android:gravity="left"
             />
 
         <TextView
-            android:id="@+id/in"
+            android:id="@+id/admission"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:text="In-State Tuition: "
-            android:gravity="left"
-            />
-
-        <TextView
-            android:id="@+id/out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:text="Out-of-State Tuition: "
-            android:gravity="left"
-            />
-
-        <TextView
-            android:id="@+id/debt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:text="Median Debt: "
-            android:gravity="left"
+            android:text="Admission Rate: "
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/size"
             />
 
         <TextView
@@ -104,11 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="2"
-            android:layout_column="0"
             android:text="Completion Rate: "
-            android:gravity="left"
+            android:layout_marginRight="22dp"
+            android:layout_below="@id/admission"
             />
 
         <TextView
@@ -116,14 +72,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_gravity="center"
-            android:layout_row="3"
-            android:layout_column="0"
             android:text="Retention Rate: "
-            android:gravity="left"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/completion"
             />
 
-    </GridLayout>
+        <TextView
+            android:id="@+id/in"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="In-State Tuition: "
+            android:layout_toRightOf="@+id/size"
+            />
+
+        <TextView
+            android:id="@+id/out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Out-of-State Tuition: "
+            android:layout_toRightOf="@id/admission"
+            android:layout_below="@+id/in"
+            />
+
+        <TextView
+            android:id="@+id/debt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Median Debt: "
+            android:layout_below="@id/out"
+            android:layout_toRightOf="@id/completion"
+            />
+
+    </RelativeLayout>
 
     <WebView
         android:id="@+id/webview"
