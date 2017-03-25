@@ -38,7 +38,7 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
 
         if (id.equals("NAMES")) {
             // get names to populate listview
-            data = DBQueries.getNames(fragment.db);
+            contains = DBQueries.getNames(fragment.db);
         }
         else if (id.equals("LIST")) {
             // returns a colleges info
@@ -60,7 +60,7 @@ public class AccessDB extends AsyncTask<Void, Void, String> {
         super.onPostExecute(string);
 
         if (id.equals("NAMES")) {
-            fragment.populateColleges(data);
+            fragment.populateColleges(contains);
         }
         else if (id.equals("LIST")) {
             fragment.startList(data);

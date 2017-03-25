@@ -20,16 +20,16 @@ import java.util.List;
  * Custom Adapter used to populate the list view
  */
 
-public class CustomAdapter extends ArrayAdapter<String>{
+public class CustomAdapter extends ArrayAdapter<String[]>{
 
     private static final String LOG_TAG = CustomAdapter.class.getName();
     private static final String ID = "LIST";
 
-    protected List<String> colleges = null;
+    protected List<String[]> colleges = null;
     protected MainFragment fragment = null;
     private Handler h = null;
 
-    public CustomAdapter(Context ctx, int resource, List<String> colleges, MainFragment fragment) {
+    public CustomAdapter(Context ctx, int resource, List<String[]> colleges, MainFragment fragment) {
         super(ctx, resource, colleges);
 
         this.colleges = colleges;
@@ -43,7 +43,7 @@ public class CustomAdapter extends ArrayAdapter<String>{
     }
 
     @Override
-    public String getItem(int position) {
+    public String[] getItem(int position) {
         return colleges.get(position);
     }
 
@@ -62,7 +62,10 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
         // Handle TextView and display string from your list
         final TextView listItemText = (TextView)view.findViewById(R.id.list_item);
-        listItemText.setText(colleges.get(position));
+        final TextView addrItem = (TextView)view.findViewById(R.id.list_item_address);
+
+        listItemText.setText(colleges.get(position)[0]);
+        addrItem.setText(colleges.get(position)[1]);
         ImageButton delete = (ImageButton)view.findViewById(R.id.delete);
 
         // Remove school from listview and database
@@ -70,13 +73,14 @@ public class CustomAdapter extends ArrayAdapter<String>{
             int i = position;
             @Override
             public void onClick(View v) {
-                final String remove = colleges.get(position);
+                String[] remove = colleges.get(position);
                 colleges.remove(i);
+                final String data_remove = remove[0] + " " + remove[1];
                 notifyDataSetChanged();
                 h.post(new Runnable() {
                     @Override
                     public void run() {
-                        DBQueries.deleteRow(fragment.db, remove);
+                        DBQueries.deleteRow(fragment.db, data_remove);
                     }
                 });
             }
@@ -87,9 +91,9 @@ public class CustomAdapter extends ArrayAdapter<String>{
 
             @Override
             public void onClick(View v) {
-                // SQLITE
                 ArrayList<String> location = new ArrayList();
-                location.add(colleges.get(position));
+                String id = colleges.get(position)[0] + " " + colleges.get(position)[1];
+                location.add(id);
                 AccessDB accessDB = new AccessDB(ID, location, fragment);
                 accessDB.execute();
             }

@@ -28,8 +28,8 @@ public class MainFragment extends Fragment {
     public static final String CONTAINS = "CONTAINS";
 
     private ListView list = null;
-    private ArrayAdapter<String> collegesAdapter;
-    private List<String> colleges;
+    private ArrayAdapter<String[]> collegesAdapter;
+    private List<String[]> colleges;
 
     // SQLite instance data
     private DBHelper dbHelper = null;
@@ -69,7 +69,7 @@ public class MainFragment extends Fragment {
         new AccessDB(ID, new ArrayList<String>(), this).execute();
     }
 
-    protected void populateColleges(ArrayList<String> names) {
+    protected void populateColleges(ArrayList<String[]> names) {
         for (int i = 0; i < names.size(); i++) {
             colleges.add(names.get(i));
         }
@@ -81,28 +81,19 @@ public class MainFragment extends Fragment {
         String name = college_data.get(0);
         String addr = college_data.get(4);
         int duplicate = 0;
-        if (!data.isEmpty()) {
-            for (int i = 0; i < data.size(); i++) {
-                String rName = data.get(i)[0];
-                String rAddr = data.get(i)[1];
-                if (rName.equals(name) && rAddr.equals(addr)) {
-                    // College already in the list so don't add
-                    break;
-                } else if (rName.equals(name) && !rAddr.equals(addr)) {
-                    duplicate++;
-                }
-            }
-            if (duplicate > 0) {
-                colleges.add(name + ": " + addr);
-                String id = name + ": " + addr;
-                // Store with SQLite
-                dbHelper = new DBHelper(getContext());
-                new CreateDB(college_data, id).execute();
+        for (int i = 0; i < data.size(); i++) {
+            String rName = data.get(i)[0];
+            String rAddr = data.get(i)[1];
+            if (rName.equals(name) && rAddr.equals(addr)) {
+                // College already in the list so don't add
+                duplicate++;
             }
         }
-        else {
-            colleges.add(name);
-            String id = name;
+        if (duplicate == 0) {
+            String[] item = {name, addr};
+            colleges.add(item);
+            String id = name + " " + addr;
+            // Store with SQLite
             dbHelper = new DBHelper(getContext());
             new CreateDB(college_data, id).execute();
         }

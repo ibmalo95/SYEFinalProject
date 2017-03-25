@@ -61,18 +61,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
                 double lon = 0.0;
                 String[] data = coordinates.get(key);
 
-                lat = Double.parseDouble(data[0]);
-                lon = Double.parseDouble(data[1]);
-
-                LatLng place = new LatLng(lat, lon);
-                places.add(place);
                 if (key.equals("HOME")) {
+                    lat = Double.parseDouble(data[0]);
+                    lon = Double.parseDouble(data[1]);
 
+                    LatLng place = new LatLng(lat, lon);
+                    places.add(place);
                     mMap.addMarker(new MarkerOptions().position(place).title(key)
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
                 } else {
-                    mMap.addMarker(new MarkerOptions().position(place).title(key));
+                    String name = data[0];
+                    lat = Double.parseDouble(data[1]);
+                    lon = Double.parseDouble(data[2]);
+                    LatLng place = new LatLng(lat, lon);
+                    places.add(place);
+                    mMap.addMarker(new MarkerOptions().position(place).title(name));
                 }
             }
         }

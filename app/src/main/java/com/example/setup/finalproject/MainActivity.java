@@ -19,8 +19,7 @@ public class MainActivity extends Activity {
     public static final String ID = "HOME";
     public static final String API_KEY = "AIzaSyC5oGSPPmvHwrZO1CsAnxyd_pVIky8F2pE";
 
-
-    ArrayList<String> locations = new ArrayList();
+    private ArrayList<String> locations = new ArrayList();
     private MainFragment mainFragment;
 
     @Override
@@ -49,7 +48,6 @@ public class MainActivity extends Activity {
                 startActivityForResult(intent_home, HOME_REQUEST);
                 return true;
             case R.id.map:
-                // SQLite
                 AccessDB accessDB = new AccessDB(ID, MainActivity.this, mainFragment);
                 accessDB.execute();
                 return true;

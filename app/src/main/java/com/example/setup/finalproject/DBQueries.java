@@ -63,6 +63,7 @@ public class DBQueries {
         // columns to return
         String [] projection = {
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_ID,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT,
                 UniversityDataContract.UniversityEntry.COLUMN_NAME_LON
         };
@@ -84,6 +85,7 @@ public class DBQueries {
 
             String key = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID));
             String[] coordinates = {
+                    cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME)),
                     cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT)),
                     cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON))
             };
@@ -93,10 +95,11 @@ public class DBQueries {
         return items;
     }
 
-    public static ArrayList<String> getNames(SQLiteDatabase db) {
+    public static ArrayList<String[]> getNames(SQLiteDatabase db) {
         // columns to return
         String [] projection = {
-                UniversityDataContract.UniversityEntry.COLUMN_NAME_ID
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME,
+                UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR
         };
 
         Cursor cursor = db.query(
@@ -109,11 +112,15 @@ public class DBQueries {
                 null
         );
 
-        ArrayList<String> items = new ArrayList<>();
+        ArrayList<String[]> items = new ArrayList<>();
 
         while (cursor.moveToNext()) {
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID));
-            items.add(name);
+            String[] item = {
+                    cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR))
+            };
+
+            items.add(item);
         }
         return items;
     }
