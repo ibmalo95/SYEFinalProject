@@ -35,45 +35,6 @@
         android:layout_below="@+id/search_college"
         android:visibility="gone"/>
 
-    <!--&lt;!&ndash; Layout for manually entering data&ndash;&gt;-->
-
-    <!--<EditText-->
-        <!--android:id="@+id/url"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:hint="URL"-->
-        <!--android:textSize="60sp"-->
-        <!--android:layout_marginLeft="@dimen/college_name_margin"-->
-        <!--android:layout_below="@+id/college_name"/>-->
-
-    <!--<EditText-->
-        <!--android:id="@+id/street"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:hint="@string/street"-->
-        <!--android:textSize="60sp"-->
-        <!--android:layout_marginLeft="@dimen/college_name_margin"-->
-        <!--android:layout_below="@+id/url"-->
-        <!--android:visibility="visible"/>-->
-
-    <!--<EditText-->
-        <!--android:id="@+id/city"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:hint="@string/city"-->
-        <!--android:textSize="60sp"-->
-        <!--android:layout_marginLeft="@dimen/college_name_margin"-->
-        <!--android:layout_below="@+id/street"-->
-        <!--android:visibility="visible"/>-->
-
-    <!--<Spinner-->
-        <!--android:id="@+id/state"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:entries="@array/states"-->
-        <!--android:scrollbarSize="@dimen/item_size"-->
-        <!--android:visibility="visible"/>-->
-
     <!-- Add Button-->
     <Button
     android:id="@+id/add_college"

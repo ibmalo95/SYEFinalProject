@@ -23,10 +23,7 @@
     <Spinner
         android:id="@+id/state"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/states"
-        android:scrollbarSize="@dimen/item_size">
-
+        android:layout_height="wrap_content">
     </Spinner>
 
     <Button

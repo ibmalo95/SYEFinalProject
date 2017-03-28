@@ -139,8 +139,8 @@ public class AddActivity extends Activity {
         else {
             // set the contents of the spinner to colleges found through search
             list = array;
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, entries);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner, entries);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setVisibility(View.VISIBLE);
             add_college.setVisibility(View.VISIBLE);

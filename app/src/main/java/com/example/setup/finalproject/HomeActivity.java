@@ -15,6 +15,10 @@ import android.widget.Spinner;
 public class HomeActivity extends Activity {
 
     public static final String HOME = "com.example.setup.HomeActivity.HOME";
+    public static final String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL",
+            "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
+            "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI",
+            "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
     EditText city = null;
     Spinner state = null;
     Button set = null;
@@ -27,6 +31,10 @@ public class HomeActivity extends Activity {
         city = (EditText) findViewById(R.id.city);
         state = (Spinner) findViewById(R.id.state);
         set = (Button) findViewById(R.id.set_home);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner, states);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        state.setAdapter(adapter);
 
         set.setOnClickListener(new View.OnClickListener() {
             @Override
