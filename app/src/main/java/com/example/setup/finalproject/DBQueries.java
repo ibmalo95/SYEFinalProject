@@ -161,6 +161,8 @@ public class DBQueries {
         return items;
     }
 
+//    public static void updateRow(SQLiteDatabase db, String id, )
+
     public static void deleteRow(SQLiteDatabase db, String id) {
         try {
             String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + " = ?";

@@ -53,30 +53,39 @@ public class AddActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                // Search for school using name given by user
-                college_name = (EditText) findViewById(R.id.college_name);
-                String name = college_name.getText().toString();
-                if (!name.isEmpty()) {
+                ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+                    // Search for school using name given by user
+                    college_name = (EditText) findViewById(R.id.college_name);
+                    String name = college_name.getText().toString();
+                    if (!name.isEmpty()) {
 
-                    Uri.Builder builder = new Uri.Builder();
-                    builder.scheme("https").authority("api.data.gov").
-                            appendPath("ed").
-                            appendPath("collegescorecard").
-                            appendPath("v1").
-                            appendPath("schools").
-                            appendPath("json").
-                            appendQueryParameter("school.name", name).
-                            appendQueryParameter("fields", FIELDS).
-                            appendQueryParameter("api_key", API_KEY);
+                        Uri.Builder builder = new Uri.Builder();
+                        builder.scheme("https").authority("api.data.gov").
+                                appendPath("ed").
+                                appendPath("collegescorecard").
+                                appendPath("v1").
+                                appendPath("schools").
+                                appendPath("json").
+                                appendQueryParameter("school.name", name).
+                                appendQueryParameter("fields", FIELDS).
+                                appendQueryParameter("api_key", API_KEY);
 
-                    String url = builder.build().toString();
+                        String url = builder.build().toString();
 
-                    GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(add, ID);
-                    getUniversityDataTask.execute(url);
+                        GetUniversityDataTask getUniversityDataTask = new GetUniversityDataTask(add, ID);
+                        getUniversityDataTask.execute(url);
+                    }
+                    else {
+                        Toast.makeText(add, "Enter a school", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else {
-                    Toast.makeText(add, "Enter a school", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(add, "No network connection", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
 

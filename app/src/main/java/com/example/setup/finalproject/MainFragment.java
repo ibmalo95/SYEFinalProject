@@ -65,6 +65,12 @@ public class MainFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
+
     protected void getNames() {
         new AccessDB(ID, new ArrayList<String>(), this).execute();
     }
@@ -112,7 +118,6 @@ public class MainFragment extends Fragment {
 
     // ********************************** SQLite ***************************************************
 
-    // TODO: add columns to database to accommodate new info
     private class CreateDB extends AsyncTask<Void, Void, SQLiteDatabase> {
 
         ArrayList<String> data = null;

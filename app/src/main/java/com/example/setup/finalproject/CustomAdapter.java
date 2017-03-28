@@ -85,10 +85,8 @@ public class CustomAdapter extends ArrayAdapter<String[]>{
                 });
             }
         });
-
         // Access individual colleges information
-        listItemText.setOnClickListener(new View.OnClickListener() {
-
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<String> location = new ArrayList();
