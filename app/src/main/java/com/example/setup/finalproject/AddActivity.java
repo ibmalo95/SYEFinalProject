@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -144,6 +145,9 @@ public class AddActivity extends Activity {
             spinner.setAdapter(adapter);
             spinner.setVisibility(View.VISIBLE);
             add_college.setVisibility(View.VISIBLE);
+            // hide keyboard when dropdown menu is displayed
+            InputMethodManager im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(college_name.getWindowToken(), 0);
         }
     }
 }
