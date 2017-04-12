@@ -3,7 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="button_margin">15dp</dimen>
-    <dimen name="list_height">760dp</dimen>
     <dimen name="college_name_margin">15sp</dimen>
     <dimen name="item_size">40sp</dimen>
+    <dimen name="text_input">60sp</dimen>
+    <dimen name="button_size">40sp</dimen>
+    <dimen name="overview_textviews">20sp</dimen>
+    <dimen name="overview_margin">20dp</dimen>
+    <dimen name="overview_below_margin">15dp</dimen>
+    <dimen name="overview_textsize">30sp</dimen>
+    <dimen name="address_size">35sp</dimen>
+    <dimen name="spinner_text">30sp</dimen>
 </resources>

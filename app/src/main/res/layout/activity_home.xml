@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/city"
-        android:textSize="60sp"
+        android:textSize="@dimen/text_input"
         android:layout_marginLeft="@dimen/college_name_margin"/>
 
     <Spinner
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set"
-        android:textSize="40sp"
+        android:textSize="@dimen/button_size"
         android:layout_marginLeft="@dimen/button_margin"
         android:layout_below="@+id/college_name"/>
 

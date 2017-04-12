@@ -14,15 +14,15 @@
         android:id="@+id/list_item_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
+        android:textSize="@dimen/address_size"
         android:layout_below="@+id/list_item"
-        android:text="Address"/>
+        android:text="@string/address"/>
 
     <ImageButton
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/list_item_address"
+        android:layout_alignEnd="@+id/list_item_address"
         android:layout_below="@+id/list_item"
         android:src="@drawable/ic_close_black_24dp" />
 

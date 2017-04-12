@@ -23,87 +23,73 @@
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="@dimen/overview_textsize"
         android:layout_gravity="center"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="OVERVIEW:"/>
+        android:textSize="@dimen/overview_textsize"
+        android:text="@string/overview"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp">
+        android:layout_marginBottom="@dimen/overview_below_margin">
 
         <TextView
             android:id="@+id/size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginRight="20dp"
-            android:text="Size (Undergrad): "
+            style="@style/overview_textviews"
+            android:layout_marginEnd="@dimen/overview_margin"
+            android:text="@string/size_undergrad"
             />
 
         <TextView
             android:id="@+id/admission"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Admission Rate: "
-            android:layout_marginRight="20dp"
+            style="@style/overview_textviews"
+            android:text="@string/admission_rate"
+            android:layout_marginEnd="@dimen/overview_margin"
             android:layout_below="@+id/size"
             />
 
         <TextView
             android:id="@+id/completion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Completion Rate: "
-            android:layout_marginRight="22dp"
+            style="@style/overview_textviews"
+            android:text="@string/completion_rate"
+            android:layout_marginEnd="@dimen/overview_margin"
             android:layout_below="@id/admission"
             />
 
         <TextView
             android:id="@+id/retention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Retention Rate: "
-            android:layout_marginRight="20dp"
+            style="@style/overview_textviews"
+            android:text="@string/retention_rate"
+            android:layout_marginEnd="@dimen/overview_margin"
             android:layout_below="@id/completion"
             />
 
         <TextView
             android:id="@+id/in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="In-State Tuition: "
-            android:layout_toRightOf="@+id/size"
+            style="@style/overview_textviews"
+            android:text="@string/in_state_tuition"
+            android:layout_toEndOf="@+id/size"
             />
 
         <TextView
             android:id="@+id/out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Out-of-State Tuition: "
-            android:layout_toRightOf="@id/admission"
+            style="@style/overview_textviews"
+            android:text="@string/out_of_state_tuition"
+            android:layout_toEndOf="@id/admission"
             android:layout_below="@+id/in"
             />
 
         <TextView
             android:id="@+id/debt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Median Debt: "
+            style="@style/overview_textviews"
+            android:text="@string/median_debt"
             android:layout_below="@id/out"
-            android:layout_toRightOf="@id/completion"
+            android:layout_toEndOf="@id/completion"
             />
 
     </RelativeLayout>
@@ -113,7 +99,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.0">
-
     </WebView>
 
 </LinearLayout>

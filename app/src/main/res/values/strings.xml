@@ -12,6 +12,15 @@
     <string name="street">Street</string>
     <string name="city">City</string>
     <string name="search">Search</string>
+    <string name="overview">OVERVIEW:</string>
+    <string name="size_undergrad">Size (Undergrad):</string>
+    <string name="admission_rate">Admission Rate:</string>
+    <string name="completion_rate">Completion Rate:</string>
+    <string name="retention_rate">Retention Rate:</string>
+    <string name="in_state_tuition">In-State Tuition:</string>
+    <string name="out_of_state_tuition">Out-of-State Tuition:</string>
+    <string name="median_debt">Median Debt:</string>
+    <string name="address">Address</string>
 
     <string-array name="states">
         <item>AL</item>

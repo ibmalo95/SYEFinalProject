@@ -23,7 +23,7 @@
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="@dimen/overview_textsize"
         android:layout_gravity="center"
         />
 
@@ -36,68 +36,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginRight="15dp">
+            android:layout_marginEnd="@dimen/overview_below_margin">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="OVERVIEW:"/>
+                android:textSize="@dimen/overview_textsize"
+                android:text="@string/overview"/>
 
             <TextView
                 android:id="@+id/size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Size (Undergrad): "
+                style="@style/overview_textviews"
+                android:text="@string/size_undergrad"
                 />
 
             <TextView
                 android:id="@+id/admission"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Admission Rate: "
+                style="@style/overview_textviews"
+                android:text="@string/admission_rate"
                 />
 
             <TextView
                 android:id="@+id/completion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Completion Rate: "
+                style="@style/overview_textviews"
+                android:text="@string/completion_rate"
                 />
 
             <TextView
                 android:id="@+id/retention"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Retention Rate: "
+                style="@style/overview_textviews"
+                android:text="@string/retention_rate"
                 />
 
             <TextView
                 android:id="@+id/in"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="In-State Tuition: "
+                style="@style/overview_textviews"
+                android:text="@string/in_state_tuition"
                 />
 
             <TextView
                 android:id="@+id/out"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Out-of-State Tuition: "
+                style="@style/overview_textviews"
+                android:text="@string/out_of_state_tuition"
                 />
 
             <TextView
                 android:id="@+id/debt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Median Debt: "
+                style="@style/overview_textviews"
+                android:text="@string/median_debt"
                 />
 
         </LinearLayout>

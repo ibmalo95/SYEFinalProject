@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/college_name"
-        android:textSize="60sp"
+        android:textSize="@dimen/text_input"
         android:layout_marginLeft="@dimen/college_name_margin"/>
 
     <Button
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/search"
-        android:textSize="40sp"
+        android:textSize="@dimen/button_size"
         android:layout_marginLeft="@dimen/button_margin"
         android:layout_below="@+id/college_name"
         android:visibility="visible"/>
@@ -41,7 +41,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/add_menu"
-    android:textSize="40sp"
+    android:textSize="@dimen/button_size"
     android:layout_marginLeft="@dimen/button_margin"
     android:layout_below="@+id/spinner"
     android:visibility="gone"/>

@@ -85,8 +85,6 @@ public class AddActivity extends Activity {
                 else {
                     Toast.makeText(add, "No network connection", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -134,12 +132,12 @@ public class AddActivity extends Activity {
             Toast.makeText(add, "No network connection", Toast.LENGTH_SHORT).show();
         }
         else if (array.length() == 0) {
-            // TODO: Manually enter data maybe?
             Toast.makeText(add, "No college found.", Toast.LENGTH_SHORT).show();
         }
         else {
             // set the contents of the spinner to colleges found through search
-            list = array;
+            list = array; // save this on orientation change
+            // save entries on orientation change
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner, entries);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
@@ -150,4 +148,13 @@ public class AddActivity extends Activity {
             im.hideSoftInputFromWindow(college_name.getWindowToken(), 0);
         }
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle savedInstanceState) {
+//
+//        savedInstanceState.putString("JSONArray", list.toString());
+//        savedInstanceState.putArray("MyStringKey", myString);
+//
+//        super.onSaveInstanceState(savedInstanceState);
+//    }
 }
