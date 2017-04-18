@@ -79,10 +79,13 @@ public class MainFragment extends Fragment {
         for (int i = 0; i < names.size(); i++) {
             colleges.add(names.get(i));
         }
+        collegesAdapter.notifyDataSetChanged();
         list = (ListView) root.findViewById(R.id.college_list);
         list.setAdapter(collegesAdapter);
         list.setClickable(true);
     }
+
+
     protected void contains(ArrayList<String[]> data, ArrayList<String> college_data) {
         String name = college_data.get(0);
         String addr = college_data.get(4);
@@ -98,6 +101,7 @@ public class MainFragment extends Fragment {
         if (duplicate == 0) {
             String[] item = {name, addr};
             colleges.add(item);
+            collegesAdapter.notifyDataSetChanged();
             String id = name + " " + addr;
             // Store with SQLite
             dbHelper = new DBHelper(getContext());
