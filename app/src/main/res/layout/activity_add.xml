@@ -33,7 +33,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_college"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/spinner_margin"/>
 
     <!-- Add Button-->
     <Button
