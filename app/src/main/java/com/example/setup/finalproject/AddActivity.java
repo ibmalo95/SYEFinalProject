@@ -8,6 +8,7 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -41,6 +42,7 @@ public class AddActivity extends Activity {
     Button add_college = null;
     Spinner spinner = null;
     JSONArray list = null;
+    String[] spinner_data = null;
     AddActivity add = this;
 
     @Override
@@ -48,6 +50,20 @@ public class AddActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         spinner = (Spinner) findViewById(R.id.spinner);
+        add_college = (Button) findViewById(R.id.add_college);
+        college_name = (EditText) findViewById(R.id.college_name);
+
+        if (savedInstanceState != null) {
+            try {
+                String jsonString = savedInstanceState.getString("JSONArray");
+                list = new JSONArray(jsonString);
+                spinner_data = savedInstanceState.getStringArray("entries");
+                Log.i("LOG", spinner_data.toString());
+                setEntries(spinner_data, list);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         search_college = (Button) findViewById(R.id.search_college);
         search_college.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +74,6 @@ public class AddActivity extends Activity {
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
                     // Search for school using name given by user
-                    college_name = (EditText) findViewById(R.id.college_name);
                     String name = college_name.getText().toString();
                     if (!name.isEmpty()) {
 
@@ -88,7 +103,7 @@ public class AddActivity extends Activity {
             }
         });
 
-        add_college = (Button) findViewById(R.id.add_college);
+
         add_college.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +152,9 @@ public class AddActivity extends Activity {
         else {
             // set the contents of the spinner to colleges found through search
             list = array; // save this on orientation change
+            spinner_data = entries;
             // save entries on orientation change
+
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner, entries);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
@@ -149,12 +166,12 @@ public class AddActivity extends Activity {
         }
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//
-//        savedInstanceState.putString("JSONArray", list.toString());
-//        savedInstanceState.putArray("MyStringKey", myString);
-//
-//        super.onSaveInstanceState(savedInstanceState);
-//    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putString("JSONArray", list.toString());
+        savedInstanceState.putStringArray("entries", spinner_data);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
 }
