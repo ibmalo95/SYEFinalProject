@@ -56,10 +56,12 @@ public class AddActivity extends Activity {
         if (savedInstanceState != null) {
             try {
                 String jsonString = savedInstanceState.getString("JSONArray");
-                list = new JSONArray(jsonString);
                 spinner_data = savedInstanceState.getStringArray("entries");
-                Log.i("LOG", spinner_data.toString());
-                setEntries(spinner_data, list);
+                if (jsonString != null || spinner_data != null) {
+                    list = new JSONArray(jsonString);
+                    setEntries(spinner_data, list);
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -168,10 +170,12 @@ public class AddActivity extends Activity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-
-        savedInstanceState.putString("JSONArray", list.toString());
-        savedInstanceState.putStringArray("entries", spinner_data);
-
         super.onSaveInstanceState(savedInstanceState);
+
+        if (list != null && spinner_data != null) {
+            savedInstanceState.putString("JSONArray", list.toString());
+            savedInstanceState.putStringArray("entries", spinner_data);
+        }
+
     }
 }
