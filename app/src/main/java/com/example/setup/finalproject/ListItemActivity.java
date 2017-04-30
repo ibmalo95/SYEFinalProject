@@ -3,9 +3,11 @@ package com.example.setup.finalproject;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,18 +19,19 @@ public class ListItemActivity extends Activity {
 
     public static final String LOG_TAG = ListItemActivity.class.getName();
 
-    private TextView collegeName = null;
-    private String url = null;
+    private TextView collegeName;
+    private String url;
     private WebView webView;
-    private String addressText = null;
-    private TextView address = null;
-    private TextView admission = null;
-    private TextView size = null;
-    private TextView in_state = null;
-    private TextView out_state = null;
-    private TextView debt = null;
-    private TextView completion = null;
-    private TextView retention = null;
+    private String addressText;
+    private TextView address;
+    private TextView admission;
+    private TextView size;
+    private TextView in_state;
+    private TextView out_state;
+    private TextView debt;
+    private TextView completion;
+    private TextView retention;
+    private ProgressBar progress_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +86,21 @@ public class ListItemActivity extends Activity {
         debt.setText(debt_text);
 
         webView = (WebView)findViewById(R.id.webview);
+        progress_bar = (ProgressBar) findViewById(R.id.progress);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient() {
 
+        // Change visibility of progress bar on web view
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                if(progress < 100 && progress_bar.getVisibility() == ProgressBar.GONE){
+                    progress_bar.setVisibility(ProgressBar.VISIBLE);
+                }
+
+                progress_bar.setProgress(progress);
+                if(progress == 100) {
+                    progress_bar.setVisibility(ProgressBar.GONE);
+                }
+            }
         });
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
