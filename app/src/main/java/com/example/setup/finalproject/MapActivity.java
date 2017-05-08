@@ -21,13 +21,15 @@ import java.util.HashMap;
 /*
  * displays map and markers
  */
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     private static final String LIST = "LIST";
     private static final String LOG_TAG = MapActivity.class.getName();
 
     private GoogleMap mMap;
     private HashMap<String,String[]> coordinates;
+    private boolean zoom = true;
+    private LatLngBounds bounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
                     mMap.addMarker(new MarkerOptions().position(place).title(key)
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-                } else {
+                }
+                else {
                     String name = data[0];
                     lat = Double.parseDouble(data[1]);
                     lon = Double.parseDouble(data[2]);
@@ -83,26 +86,46 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
 
         if (places.size() > 0) {
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (LatLng place : places) {
-                builder.include(place);
+            if (places.size() == 1) {
+                double lat = places.get(0).latitude;
+                double lon = places.get(0).longitude;
+                builder.include(new LatLng(lat + 0.01, lon + 0.01));
+                builder.include(new LatLng(lat - 0.01, lon - 0.01));
+            }
+            else {
+                for (LatLng place : places) {
+                    builder.include(place);
+                }
             }
 
-            LatLngBounds bounds = builder.build();
+            bounds = builder.build();
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
         } else {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.0902, 95.7129), 100));
         }
+        mMap.setOnMarkerClickListener(this);
 
-        // TODO: think of a way to make the info window more interesting
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
+    }
 
-//                ArrayList<String> location = new ArrayList();
-//                location.add(marker.getTitle());
-//                AccessDB accessDB = new AccessDB(LIST, location, fragment);
-//                accessDB.execute();
-            }
-        });
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        // Zoom in on marker
+        if (zoom) {
+            marker.showInfoWindow();
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            double lat = marker.getPosition().latitude;
+            double lon = marker.getPosition().longitude;
+            builder.include(new LatLng(lat + 0.01, lon + 0.01));
+            builder.include(new LatLng(lat - 0.01, lon - 0.01));
+            LatLngBounds marker_bounds = builder.build();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(marker_bounds, 50));
+            zoom = false;
+        }
+        // Zoom out to show all markers
+        else {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 200));
+            zoom = true;
+        }
+        return true;
     }
 }

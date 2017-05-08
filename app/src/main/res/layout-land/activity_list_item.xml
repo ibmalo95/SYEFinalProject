@@ -16,7 +16,7 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,14 +28,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/item_size"
-                android:text="St Lawrence University"
                 />
 
             <TextView
                 android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Canton, NY"
                 android:textSize="@dimen/overview_textsize"
                 android:layout_marginBottom="10dp"
                 />
