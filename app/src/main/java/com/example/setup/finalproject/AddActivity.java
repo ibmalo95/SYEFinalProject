@@ -37,13 +37,13 @@ public class AddActivity extends Activity {
 
     public static final String ID = "COLLEGE";
 
-    EditText college_name = null;
-    Button search_college = null;
-    Button add_college = null;
-    Spinner spinner = null;
-    JSONArray list = null;
-    String[] spinner_data = null;
-    AddActivity add = this;
+    private EditText college_name = null;
+    private Button search_college = null;
+    private Button add_college = null;
+    private Spinner spinner = null;
+    private JSONArray list = null;
+    private String[] spinner_data = null;
+    private AddActivity add = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,8 @@ public class AddActivity extends Activity {
         add_college = (Button) findViewById(R.id.add_college);
         college_name = (EditText) findViewById(R.id.college_name);
 
+        // if search was previously clicked restore the spinner entries
+        // and data associated with them
         if (savedInstanceState != null) {
             try {
                 String jsonString = savedInstanceState.getString("JSONArray");
@@ -74,6 +76,7 @@ public class AddActivity extends Activity {
 
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+                // if there is no network connection don't try to search
                 if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
                     // Search for school using name given by user
                     String name = college_name.getText().toString();
@@ -110,7 +113,7 @@ public class AddActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                // Get the college that the user selected, store the corresponding data and return to mainactivity
+                // Get the college that the user selected and store the corresponding data
                 int index = spinner.getSelectedItemPosition();
                 try {
                     JSONObject data = list.getJSONObject(index);
@@ -144,6 +147,7 @@ public class AddActivity extends Activity {
         });
     }
 
+    // Populate the spinner with the entries returned from the web service request
     protected void setEntries(String[] entries, JSONArray array) {
         if (array == null) {
             Toast.makeText(add, "No network connection", Toast.LENGTH_SHORT).show();
@@ -153,9 +157,8 @@ public class AddActivity extends Activity {
         }
         else {
             // set the contents of the spinner to colleges found through search
-            list = array; // save this on orientation change
+            list = array;
             spinner_data = entries;
-            // save entries on orientation change
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner, entries);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -171,11 +174,10 @@ public class AddActivity extends Activity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-
+        // save spinner data if search was clicked
         if (list != null && spinner_data != null) {
             savedInstanceState.putString("JSONArray", list.toString());
             savedInstanceState.putStringArray("entries", spinner_data);
         }
-
     }
 }

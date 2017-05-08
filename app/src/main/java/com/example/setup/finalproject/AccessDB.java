@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * Accesses database from different thread
  * Created by Ina on 2/23/17.
  */
 

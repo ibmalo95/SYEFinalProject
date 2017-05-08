@@ -20,7 +20,9 @@ import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Ina on 11/15/16.
- * Access either USED or Geocoding API in order to retrieve data
+ * Access either USED College Scorecard or Geocoding API in order to retrieve data
+ * College Scorecard: https://collegescorecard.ed.gov/data/documentation/
+ * Geocoding: https://developers.google.com/maps/documentation/geocoding/intro
  */
 
 public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
@@ -100,7 +102,7 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
         }
     }
 
-    // parse the JSON returned from the US Department of Education
+    // parse the JSON returned from the US Department of Education College Scorecard
     protected void getRecordArrayFromJSON(String JSON) throws JSONException {
         JSONObject universityInfo = null;
         // Full JSON
@@ -135,5 +137,4 @@ public class GetUniversityDataTask extends AsyncTask<String, Void, String []>{
 
         return latlon;
     }
-
 }

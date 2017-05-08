@@ -60,7 +60,7 @@ public class CustomAdapter extends ArrayAdapter<String[]>{
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
-        // Handle TextView and display string from your list
+        // Handle TextView and display string from the list
         final TextView listItemText = (TextView)view.findViewById(R.id.list_item);
         final TextView addrItem = (TextView)view.findViewById(R.id.list_item_address);
 
@@ -85,7 +85,7 @@ public class CustomAdapter extends ArrayAdapter<String[]>{
                 });
             }
         });
-        // Access individual colleges information
+        // Access individual colleges information in database
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/*
+ * Sets the menu button
+ */
 public class MainActivity extends Activity {
 
     public static final int ADD_REQUEST = 1;
@@ -75,7 +78,7 @@ public class MainActivity extends Activity {
             getPreferences(MODE_PRIVATE).edit().putString("lon", locations.get(1)).apply();
         }
     }
-
+    // Get the coordinates of the colleges and start the map activity
     protected void startMap(HashMap<String, String[]> coordinates) {
         if (locations.size() > 0) {
             String[] home = {locations.get(0), locations.get(1)};
@@ -99,6 +102,7 @@ public class MainActivity extends Activity {
             mainFragment.addCollege(college_data);
 
         }
+        // convert the home address into coordinates
         if (requestCode == HOME_REQUEST && resultCode == RESULT_OK) {
             String address = result.getStringExtra(HomeActivity.HOME);
 

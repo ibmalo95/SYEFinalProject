@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * TODO: Simplify projection, selection, and selectionargs
+ * Query the database
  * Created by Ina on 2/5/17.
  */
 
@@ -17,6 +17,8 @@ public class DBQueries {
 
     private static final String LOG_TAG = DBQueries.class.getName();
 
+    // Get data needed for college page
+    // Find the row that matches the given id
     public static ArrayList<String> getRow(SQLiteDatabase db, String id) {
 
         // columns to return
@@ -59,6 +61,7 @@ public class DBQueries {
         return items;
     }
 
+    // Get the coordinates on each college in the database
     public static HashMap<String, String[]> getLocations(SQLiteDatabase db) {
         // columns to return
         String [] projection = {
@@ -80,7 +83,6 @@ public class DBQueries {
 
         // return the data from query
         HashMap<String, String[]> items = new HashMap();
-
         while (cursor.moveToNext()) {
 
             String key = cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_ID));
@@ -95,6 +97,8 @@ public class DBQueries {
         return items;
     }
 
+    // retrieve all the names and addresses in database
+    // used to populate the listview when app is first open
     public static ArrayList<String[]> getNames(SQLiteDatabase db) {
         // columns to return
         String [] projection = {
@@ -112,8 +116,8 @@ public class DBQueries {
                 null
         );
 
+        // return the data from query
         ArrayList<String[]> items = new ArrayList<>();
-
         while (cursor.moveToNext()) {
             String[] item = {
                     cursor.getString(cursor.getColumnIndexOrThrow(UniversityDataContract.UniversityEntry.COLUMN_NAME_NAME)),
@@ -125,6 +129,7 @@ public class DBQueries {
         return items;
     }
 
+    // Determine if the database already has any names that match the given name
     public static ArrayList<String[]> contains(SQLiteDatabase db, String name) {
         // columns to return
         String [] projection = {
@@ -161,8 +166,7 @@ public class DBQueries {
         return items;
     }
 
-//    public static void updateRow(SQLiteDatabase db, String id, )
-
+    // Delete a college from the database
     public static void deleteRow(SQLiteDatabase db, String id) {
         try {
             String selection = UniversityDataContract.UniversityEntry.COLUMN_NAME_ID + " = ?";

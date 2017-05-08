@@ -50,8 +50,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_main, container, false);
 
-        // input college names from SQLite table into colleges list
-        // need to open the database again
+        // input college names from database into colleges list
         if (db == null) {
             dbHelper = new DBHelper(getContext());
             new CreateDB(null, null).execute();
@@ -61,7 +60,6 @@ public class MainFragment extends Fragment {
             list.setAdapter(collegesAdapter);
             list.setClickable(true);
         }
-
         return root;
     }
 
@@ -70,11 +68,12 @@ public class MainFragment extends Fragment {
         super.onDestroy();
         db.close();
     }
-
+    // get the names and addresses of all schools in the database
     protected void getNames() {
         new AccessDB(ID, new ArrayList<String>(), this).execute();
     }
 
+    // put colleges found in the database into the colleges list
     protected void populateColleges(ArrayList<String[]> names) {
         for (int i = 0; i < names.size(); i++) {
             colleges.add(names.get(i));
@@ -85,7 +84,8 @@ public class MainFragment extends Fragment {
         list.setClickable(true);
     }
 
-
+    // check if a school is already in the database
+    // handles adding a college twice and colleges with the same name
     protected void contains(ArrayList<String[]> data, ArrayList<String> college_data) {
         String name = college_data.get(0);
         String addr = college_data.get(4);
@@ -109,18 +109,19 @@ public class MainFragment extends Fragment {
         }
     }
 
-    // add college to the ListView
+    // add college to the ListView and database
     protected void addCollege(ArrayList<String> college_data) {
         new AccessDB(CONTAINS, college_data, this).execute();
     }
 
+    // bring up the college page
     protected void startList(ArrayList<String> data) {
         Intent intent = new Intent(this.getActivity(), ListItemActivity.class);
         intent.putExtra("INFO", data);
         startActivity(intent);
     }
 
-    // ********************************** SQLite ***************************************************
+    // *************************** Add college to database **************************************
 
     private class CreateDB extends AsyncTask<Void, Void, SQLiteDatabase> {
 
@@ -147,13 +148,13 @@ public class MainFragment extends Fragment {
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LAT, data.get(2)); // Lat
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_LON, data.get(3)); // Long
                 values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADDR, data.get(4)); // Address
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADM, data.get(5));
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_SIZE, data.get(6));
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_TIN, data.get(7));
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_TOUT, data.get(8));
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_COMP, data.get(9));
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_RETEN, data.get(10));
-                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_DEBT, data.get(11));
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_ADM, data.get(5)); // admission rate
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_SIZE, data.get(6)); // size
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_TIN, data.get(7)); // in-state tuition
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_TOUT, data.get(8)); // out of state tuition
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_COMP, data.get(9)); // completion rate
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_RETEN, data.get(10)); // retention rate
+                values.put(UniversityDataContract.UniversityEntry.COLUMN_NAME_DEBT, data.get(11)); // median debt
 
                 long rowID = db.insert(UniversityDataContract.UniversityEntry.TABLE_NAME, null, values);
             }

@@ -38,6 +38,7 @@ public class ListItemActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_item);
 
+        // set the views
         collegeName = (TextView) findViewById(R.id.name);
         ArrayList<String> data = (ArrayList<String>) getIntent().getSerializableExtra("INFO");
         collegeName.setText(data.get(0));
@@ -97,7 +98,7 @@ public class ListItemActivity extends Activity {
                 }
 
                 progress_bar.setProgress(progress);
-                if(progress == 100) {
+                if (progress == 100) {
                     progress_bar.setVisibility(ProgressBar.GONE);
                 }
             }

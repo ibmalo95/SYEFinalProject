@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 /*
- * User can add home address
+ * User can add where they are from
  */
 public class HomeActivity extends Activity {
 
@@ -19,9 +19,9 @@ public class HomeActivity extends Activity {
             "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS",
             "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI",
             "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
-    EditText city = null;
-    Spinner state = null;
-    Button set = null;
+    private EditText city = null;
+    private Spinner state = null;
+    private Button set = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class HomeActivity extends Activity {
         });
     }
 
+    // repopulate the views
     @Override
     protected void onStart() {
         super.onStart();
@@ -67,6 +68,7 @@ public class HomeActivity extends Activity {
         }
     }
 
+    // save the values of the views
     @Override
     protected void onPause() {
         super.onPause();
